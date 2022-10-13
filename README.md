@@ -1,62 +1,105 @@
-# Template Proyek Django PBP
+# Project CATFISH (Cashflow Tracker and Finance Sharing)
 
-Pemrograman Berbasis Platform (CSGE602022) - diselenggarakan oleh Fakultas Ilmu Komputer Universitas Indonesia, Semester Ganjil 2022/2023
+## Meet The Team.
 
-*Read this in other languages: [Indonesian](README.md), [English](README.en.md)*
+- Dito Syahputra (2106638053)
+- Failasuf Indi Marsendy (2106750364)
+- Maulana Bayu Risma Santoso Sari (2106750401)
+- Mochammad Iqbal (2006531056)
+- Ramanti Prajna Pratisthita (2106638495)
 
-## Pendahuluan
+## Tautan Heroku APP
+https://catfish-apps.herokuapp.com/
 
-Repositori ini merupakan sebuah template yang dirancang untuk membantu mahasiswa yang sedang mengambil mata kuliah Pemrograman Berbasis Platform (CSGE602022) mengetahui struktur sebuah proyek aplikasi Django serta file dan konfigurasi yang penting dalam berjalannya aplikasi. Kamu dapat dengan bebas menyalin isi dari repositori ini atau memanfaatkan repositori ini sebagai pembelajaran sekaligus awalan dalam membuat sebuah proyek Django.
+## The Story Behind Our Project
 
-## Cara Menggunakan
+Pesatnya perkembangan teknologi kian mendorong manusia untuk dapat beradaptasi terhadapnya. Berbagai macam digitalisasi kian merambah ke tiap sudut kehidupan bermasyarakat melalui suatu gerakan bernama Transformasi Digital. Untuk dapat mencapai potensi penuh dari digitalisasi diperlukan kolaborasi seluruh stakeholder yang terlibat di dalamnya. Elemen masyarakat menjadi salah satu stakeholder terpenting yang menentukan arah perkembangan kehidupan di masa mendatang.
 
-Apabila kamu ingin menggunakan repositori ini sebagai repositori awalan yang nantinya akan kamu modifikasi:
+Masyarakat berperan aktif berkontribusi terhadap perkembangan zaman terlebih pada masa Post-Pandemic Era seperti sekarang. Semua negara berlomba untuk pulih lebih cepat dan bangkit lebih kuat dari yang seharusnya. Terutama, pada perekonomian bangsa yang sempat terjun ke arah jurang resesi global. Untuk bisa mengatasi hal tersebut, masyarakat dapat memulainya dari langkah terkecil sekalipun yakni dengan menumbuhkan financial-awareness pada diri masing-masing.
 
-1. Buka laman GitHub repositori templat kode, lalu klik tombol "**Use this template**"
-   untuk membuat salinan repositori ke dalam akun GitHub milikmu.
-2. Buka laman GitHub repositori yang dibuat dari templat, lalu gunakan perintah
-   `git clone` untuk menyalin repositorinya ke suatu lokasi di dalam sistem
-   berkas (_filesystem_) komputermu:
+Financial-awareness atau kesadaran finansial merupakan sebuah kemampuan seorang individu dalam mengatur keuangannya dengan optimal. Hal ini dapat dimulai dengan melakukan pembukuan cashflow pribadi agar stabilitas finansial dapat terus terpantau dengan baik. Tentu dalam melakukan pembukuan cashflow sangat diperlukan alat yang komprehensif untuk mengolah data yang dimiliki masing-masing individu. Maka dari itu, dengan bangga kami mempersembahkan sebuah terobosan baru bernama Cashflow Tracker and Finance Sharing atau yang dikenal sebagai CATFISH.
 
-   ```shell
-   git clone <URL ke repositori di GitHub> <path ke suatu lokasi di filesystem>
-   ```
-3. Masuk ke dalam repositori yang sudah di-_clone_ dan jalankan perintah berikut
-   untuk menyalakan _virtual environment_:
+CATFISH merupakan sebuah aplikasi berbasis web yang bertujuan untuk mempermudahkan user-nya untuk melakukan pembukuan dan tracking cashflow dirinya dalam beberapa waktu belakangan. CATFISH hadir di tengah urgensi masyarakat dalam menumbuhkan financial-awareness dalam dirinya. Kami berharap dengan hadirnya CATFISH dapat menjadi jawaban dan alat pendongkrak masyarakat untuk dapat lebih memahami seberapa penting pencatatan sistematis pemasukkan dan pengeluaran. Karena dengan mengetahui alur cash flow pribadi, masyarakat akan lebih memahami langkah finansial yang selanjutnya harus mereka lakukan. Selain itu, CATFISH juga memiliki fitur Article Sharing yang berisi tips and trick seputar finansial dan manajemen keuangan yang tentu akan semakin membantu masyarakat dalam mengatur keuangannya.
 
-   ```shell
-   python -m venv env
-   ```
-4. Nyalakan environment dengan perintah berikut:
+## Our Modules
 
-   ```shell
-   # Windows
-   .\env\Scripts\activate
-   # Linux/Unix, e.g. Ubuntu, MacOS
-   source env/bin/activate
-   ```
-5. Install dependencies yang dibutuhkan untuk menjalankan aplikasi dengan perintah berikut:
+Daftar modul yang akan diimplementasikan:
 
-   ```shell
-   pip install -r requirements.txt
-   ```
+1. Register
 
-6. Jalankan aplikasi Django menggunakan server pengembangan yang berjalan secara
-   lokal:
+Deskripsi: Halaman untuk user membuat akun baru
+Models: Django's Built-in User model, dan Writer
+Form: Username, Email, Password, Ulangi Password
+AJAX: Mengecek apakah username atau email sudah digunakan dan memberitahukan kepada user
+Logout condition: Mengarahkan user ke form register
+Login condition: Memberitahu user agar dapat logout terlebih dahulu sebelum membuat akun
 
-   ```shell
-   python manage.py runserver
-   ```
-7. Bukalah `http://localhost:8000` pada browser favoritmu untuk melihat apakah aplikasi sudah berjalan dengan benar.
+2. Login
+Deskripsi: Halaman untuk user masuk ke dalam akun yang sudah dibuat sebelumnya
+Models: Tidak ada, menggunakan model dari Register
+Form: Username, Password
+AJAX: Mengecek apakah username dan password benar, jika salah beritahukan kepada user
+Logout condition: Mengarahkan user ke form login
+Login condition: Menampilkan info akun yang sudah didaftarkan (username dan email)
 
-## Contoh Deployment 
+3. Cash Flow (pemasukan dan pengeluaran)
+Deskripsi: Halaman untuk user mencatat pemasukan dan pengeluarannya
+Models: Cash Flow
+Form: Nominal, Kategori (pengeluaran atau pemasukan), Tanggal, Deskripsi
+AJAX: Sebuah pop-up untuk menambahkan atau mengedit riwayat transaksi dan tombol untuk menghapus riwayat
+Logout condition: Mengarahkan user ke form login
+Login condition: Menampilkan daftar transaksi yang sudah dibuat
 
-Pada template ini, deployment dilakukan dengan memanfaatkan GitHub Actions sebagai _runner_ dan Heroku sebagai platform Hosting aplikasi. 
+4. Article write
+Deskripsi: Halaman untuk writer menambahkan sebuah artikel yang akan ditampilkan pada homepage
+Models: Article
+Form: Judul, Deskripsi
+AJAX: Sebuah pop-up untuk menambahkan atau mengedit artikel dan tombol untuk menghapus artikel
+Logout condition: Mengarahkan user ke form login
+Login condition: Menampilkan daftar artikel yang user sudah buat
 
-Untuk melakukan deployment, kamu dapat melihat instruksi yang ada pada [Tutorial 0](https://pbp-fasilkom-ui.github.io/ganjil-2023/assignments/tutorial/tutorial-0).
 
-Untuk contoh aplikasi Django yang sudah di deploy, dapat kamu akses di [https://django-pbp-template.herokuapp.com/](https://django-pbp-template.herokuapp.com/)
 
-## Credits
 
-Template ini dibuat berdasarkan [PBP Ganjil 2021](https://gitlab.com/PBP-2021/pbp-lab) yang ditulis oleh Tim Pengajar Pemrograman Berbasis Platform 2021 ([@prakashdivyy](https://gitlab.com/prakashdivyy)) dan [django-template-heroku](https://github.com/laymonage/django-template-heroku) yang ditulis oleh [@laymonage, et al.](https://github.com/laymonage). Template ini dirancang sedemikian rupa sehingga mahasiswa dapat menjadikan template ini sebagai awalan serta acuan dalam mengerjakan tugas maupun dalam berkarya.
+
+
+5. Homepage
+Deskripsi: Halaman tampilan awal web
+Models: Menggunakan models Article untuk menampilkan artikel dalam urutan waktu
+Form: -
+AJAX: Melakukan pemanggilan GET artikel di database untuk ditampilkan dalam bentuk preview cards
+Logout condition: Mengarahkan user ke home page
+Login condition: Menampilkan preview seluruh artikel yang ada
+
+## User’s Roles
+
+Register and Login Home Page
+Untuk mempermudah akses user. CATFISH akan dibagi menjadi dua bagian yang membentuk application system yang saling terintegrasi dengan baik, yaitu Regular User dan Article Writer. User akan diarahkan ke home page yang memiliki fitur Register dan Login terpisah untuk masing-masing user. Baik Regular User maupun Article Writer dapat melakukan login setelah mendaftar terlebih dahulu pada home page tersebut.
+Register
+Sebelum menikmati fasilitas CATFISH, user mengisi form registrasi terlebih dahulu dengan menginput data pada empat buah form yaitu username, email, password, dan ulangi password. Kemudian user menekan tombol submit, apabila telah terverifikasi valid maka user akan kembali ke home page.
+Login
+Untuk masuk ke dalam fitur utama, user harus masuk ke halaman login terlebih dahulu, user diminta untuk menginput username dan password, apabila tervalidasi maka user dapat menikmati fasilitas CATFISH.
+
+Regular User
+Add history pengeluaran
+CATFISH memberikan kemudahan bagi user untuk merekap pengeluaran dan pemasukan, dengan fitur ini user dapat menambahkan jumlah nominal baik pemasukan maupun pengeluaran. Selain itu untuk memperjelas track cash flow, user dapat menambahkan tanggal form tersebut dibuat beserta deskripsi dan judul form.
+Delete History
+Fleksibilitas merupakan salah satu yang kami tawarkan, dengan fitur ini user dapat menghapus history cash flow dengan mudah
+Rekap Pengeluaran
+Automasi yang ditawarkan CATFISH akan direalisasikan dalam fitur ini, user dapat melihat total pengeluaran per bulan beserta rinciannya yang terbagi sesuai kategori masing-masing.
+Show Artikel
+	CATFISH menghadirkan fitur yang saling terintegrasi di antara kedua jenis user, User Reguler dapat melihat artikel yang dibuat oleh Article Writer pada halaman homepage.
+
+
+Article Writer
+Add Artikel
+CATFISH mewadahi user untuk memberikan informasi dengan mudah dan efisien, dengan fitur ini user dapat membuat artikel yang dapat dilihat oleh user hanya dengan menginput form.
+Delete Artikel
+Untuk menunjang fleksibilitas, user dapat menghapus artikel yang sudah dibuat dengan mudah dalam fitur ini.
+Show Artikel
+	User Article Writer dapat melihat timeline artikel yang telah dibuat oleh Article Writer lainnya pada halaman homepage.
+
+
+Keterangan Tambahan
+Baik User Reguler maupun Article Writer memiliki peran masing-masing dalam menggunakan aplikasi CATFISH (unique user role), artinya satu akun dari user hanya mengambil satu peran baik itu User Reguler maupun Article Writer, apabila user akan menikmati peran yang lain, user harus membuat akun yang baru pada role yang berbeda..
+
