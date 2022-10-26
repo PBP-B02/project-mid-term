@@ -25,51 +25,41 @@ CATFISH merupakan sebuah aplikasi berbasis web yang bertujuan untuk mempermudahk
 
 Daftar modul yang akan diimplementasikan:
 
-1. Register
+1. Account
+- Dev: Mochammad Iqbal
+- Deskripsi: Implementasi halaman dan fungsi register, login, dan logout
+- Models: Django's Built-in User model
+- Form: Username, Email, Password, Confirm Password
+- AJAX: Mengecek apakah username atau email sudah digunakan dan mengecek apakah username dan password benar saat login
+- Logout condition: Mengarahkan user ke form login
+- Login condition: Hanya dapat melakukan logout dan tidak dapat mengakses halaman register dan login
 
-Deskripsi: Halaman untuk user membuat akun baru
-Models: Django's Built-in User model, dan Writer
-Form: Username, Email, Password, Ulangi Password
-AJAX: Mengecek apakah username atau email sudah digunakan dan memberitahukan kepada user
-Logout condition: Mengarahkan user ke form register
-Login condition: Memberitahu user agar dapat logout terlebih dahulu sebelum membuat akun
+2. Cash Flow
+- Dev: Dito Syahputra, Maulana Bayu Risma Santoso Sari
+- Deskripsi: Halaman untuk user mencatat pemasukan dan pengeluarannya
+- Models: CashFlow
+- Form: Nominal, Kategori (pengeluaran atau pemasukan), Tanggal, Deskripsi
+- AJAX: Sebuah pop-up untuk menambahkan atau mengedit riwayat transaksi dan tombol untuk menghapus riwayat
+- Logout condition: Mengarahkan user ke form login
+- Login condition: Menampilkan daftar transaksi yang sudah dibuat
 
-2. Login
-Deskripsi: Halaman untuk user masuk ke dalam akun yang sudah dibuat sebelumnya
-Models: Tidak ada, menggunakan model dari Register
-Form: Username, Password
-AJAX: Mengecek apakah username dan password benar, jika salah beritahukan kepada user
-Logout condition: Mengarahkan user ke form login
-Login condition: Menampilkan info akun yang sudah didaftarkan (username dan email)
+3. Article write
+- Dev: Ramanti Prajna Pratisthita
+- Deskripsi: Halaman untuk writer menambahkan sebuah artikel yang akan ditampilkan pada homepage
+- Models: Article
+- Form: Judul, Deskripsi
+- AJAX: Sebuah pop-up untuk menambahkan atau mengedit artikel dan tombol untuk menghapus artikel
+- Logout condition: Mengarahkan user ke form login
+- Login condition: Menampilkan daftar artikel yang user sudah buat
 
-3. Cash Flow (pemasukan dan pengeluaran)
-Deskripsi: Halaman untuk user mencatat pemasukan dan pengeluarannya
-Models: Cash Flow
-Form: Nominal, Kategori (pengeluaran atau pemasukan), Tanggal, Deskripsi
-AJAX: Sebuah pop-up untuk menambahkan atau mengedit riwayat transaksi dan tombol untuk menghapus riwayat
-Logout condition: Mengarahkan user ke form login
-Login condition: Menampilkan daftar transaksi yang sudah dibuat
-
-4. Article write
-Deskripsi: Halaman untuk writer menambahkan sebuah artikel yang akan ditampilkan pada homepage
-Models: Article
-Form: Judul, Deskripsi
-AJAX: Sebuah pop-up untuk menambahkan atau mengedit artikel dan tombol untuk menghapus artikel
-Logout condition: Mengarahkan user ke form login
-Login condition: Menampilkan daftar artikel yang user sudah buat
-
-
-
-
-
-
-5. Homepage
-Deskripsi: Halaman tampilan awal web
-Models: Menggunakan models Article untuk menampilkan artikel dalam urutan waktu
-Form: -
-AJAX: Melakukan pemanggilan GET artikel di database untuk ditampilkan dalam bentuk preview cards
-Logout condition: Mengarahkan user ke home page
-Login condition: Menampilkan preview seluruh artikel yang ada
+4. Homepage
+- Dev: Failasuf Indi Marsendy
+- Deskripsi: Halaman tampilan awal web
+- Models: Menggunakan models Article untuk menampilkan artikel dalam urutan waktu
+- Form: -
+- AJAX: Melakukan pemanggilan GET artikel di database untuk ditampilkan dalam bentuk preview cards
+- Logout condition: Mengarahkan user ke home page
+- Login condition: Menampilkan preview seluruh artikel yang ada
 
 ## User’s Roles
 
