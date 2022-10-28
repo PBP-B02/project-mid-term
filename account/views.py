@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.views import View
+import json
+from validate_email import validate_email
 from django.contrib import messages
 from django.http import JsonResponse
 from .forms import SignupForm, LoginForm
@@ -44,44 +47,42 @@ def login_view(request):
         if request.method == "POST":
             form = LoginForm(data=request.POST)
             if form.is_valid():
-                username = form.cleaned_data.get('username')
-                password = form.cleaned_data.get('password')
-                user = authenticate(username=username, password=password)
-                if user is not None :
-                    login(request, user)
-                    return redirect('/')
+                user = form.get_user()
+                login(request, user)
+                return redirect("/")
         else:
             form = LoginForm()
 
         return render(request, "login.html", {"form": form})
 
-def validate(response):
-    username1 = response.GET.get('username', None)
-    password1 = response.GET.get('password', None)
-    if (len(password1)<8 or len(username1)==0):
-        return JsonResponse({"status":"fail"})
-    else:
-        return JsonResponse({"status":"ok"})
+class ValidateLoginUsername(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        username = data['username']
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'username_valid': 'Username terdaftar'})
+        return JsonResponse({'username_error': False})
 
 def logout_view(response):
     logout(response)
     return redirect("/")
 
-def validate_username(response):
-    username = response.GET.get('username', None)
-    data = {
-        'is_taken': User.objects.filter(username=username).exists()
-    }
-    if data['is_taken']:
-        data['error_message'] = 'Username yang kamu gunakan tidak tersedia nih, coba yang lain ya!.'
-    return JsonResponse(data)
+class ValidateUsername(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        username = data['username']
+        if not str(username).isalnum():
+            return JsonResponse({'username_error': 'Username hanya mengandung alphanumeric'}, status=400)
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'username_error': 'Username sudah terdaftar'}, status=409)
+        return JsonResponse({'username_valid': True})
 
-
-def validate_email(response):
-    email = response.GET.get('email', None)
-    data = {
-        'is_taken': User.objects.filter(email=email).exists()
-    }
-    if data['is_taken']:
-        data['error_message'] = 'Email kamu sudah terdaftar, pakai email lain ya!'
-    return JsonResponse(data)
+class ValidateEmail(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        email = data['email']
+        if not validate_email(email):
+            return JsonResponse({'email_error': 'Email tidak valid'}, status=400)
+        if User.objects.filter(email=email).exists():
+            return JsonResponse({'email_error': 'Email sudah terdaftar'}, status=409)
+        return JsonResponse({'email_valid': True})

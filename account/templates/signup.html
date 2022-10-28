@@ -47,19 +47,31 @@
             >
               <form class="text-center" id="signup_form" method="post">
                 {% csrf_token %}
-                <div class="mb-3">
+                <div class="mb-3" style="width:300px">
                     {{ form.username }}
                 </div>
-                <div class="mb-3">
+                <div 
+                    class="usernameFeedbackArea1 invalid-feedback" style="display: none; text-align: left;">
+                </div>
+                <div 
+                    class="usernameFeedbackArea2 valid-feedback" style="display: none; text-align: left;">
+                </div>
+                <div class="mb-3" style="width:300px">
                     {{ form.email }}
                 </div>
-                <div class="mb-3">
+                <div 
+                    class="emailFeedbackArea1 invalid-feedback" style="display:none; text-align: left;">
+                </div>
+                <div 
+                    class="emailFeedbackArea2 valid-feedback" style="display:none; text-align: left;">
+                </div>
+                <div class="mb-3" style="width:300px">
                     {{ form.password1 }}
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" style="width:300px">
                     {{ form.password2 }}
                 </div>
-                <div style="display: flex; width: 100%">
+                <div class="d-flex" style="width: 100%; text-align: left;">
                     {{ form.role_choice }}
                 </div>
                 {% for field in form %}
@@ -92,6 +104,7 @@
     </div>
     <script src="{% static 'scripts/jquery.min.js' %}"></script>
     <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
+    <script src="{% static 'scripts/register.js' %}"></script>
   </body>
 </html>
 

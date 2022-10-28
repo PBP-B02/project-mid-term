@@ -28,9 +28,9 @@ Daftar modul yang akan diimplementasikan:
 1. Account
 - Dev: Mochammad Iqbal
 - Deskripsi: Implementasi halaman dan fungsi register, login, dan logout
-- Models: Django's Built-in User model
+- Models: Django's Built-in User model, Profile
 - Form: Username, Email, Password, Confirm Password
-- AJAX: Mengecek apakah username atau email sudah digunakan dan mengecek apakah username dan password benar saat login
+- AJAX: Mengecek apakah username atau email tersedia dan mengecek apakah username sudah terdaftar saat login
 - Logout condition: Mengarahkan user ke form login
 - Login condition: Hanya dapat melakukan logout dan tidak dapat mengakses halaman register dan login
 
@@ -63,33 +63,31 @@ Daftar modul yang akan diimplementasikan:
 
 ## User’s Roles
 
-Register and Login Home Page
+- Home Page
 Untuk mempermudah akses user. CATFISH akan dibagi menjadi dua bagian yang membentuk application system yang saling terintegrasi dengan baik, yaitu Regular User dan Article Writer. User akan diarahkan ke home page yang memiliki fitur Register dan Login terpisah untuk masing-masing user. Baik Regular User maupun Article Writer dapat melakukan login setelah mendaftar terlebih dahulu pada home page tersebut.
-Register
+- Register
 Sebelum menikmati fasilitas CATFISH, user mengisi form registrasi terlebih dahulu dengan menginput data pada empat buah form yaitu username, email, password, dan ulangi password. Kemudian user menekan tombol submit, apabila telah terverifikasi valid maka user akan kembali ke home page.
-Login
+- Login
 Untuk masuk ke dalam fitur utama, user harus masuk ke halaman login terlebih dahulu, user diminta untuk menginput username dan password, apabila tervalidasi maka user dapat menikmati fasilitas CATFISH.
-
-Regular User
-Add history pengeluaran
+- Regular User
+1. Add history pengeluaran
 CATFISH memberikan kemudahan bagi user untuk merekap pengeluaran dan pemasukan, dengan fitur ini user dapat menambahkan jumlah nominal baik pemasukan maupun pengeluaran. Selain itu untuk memperjelas track cash flow, user dapat menambahkan tanggal form tersebut dibuat beserta deskripsi dan judul form.
-Delete History
+2. Delete History
 Fleksibilitas merupakan salah satu yang kami tawarkan, dengan fitur ini user dapat menghapus history cash flow dengan mudah
-Rekap Pengeluaran
+3. Rekap Pengeluaran
 Automasi yang ditawarkan CATFISH akan direalisasikan dalam fitur ini, user dapat melihat total pengeluaran per bulan beserta rinciannya yang terbagi sesuai kategori masing-masing.
-Show Artikel
+4. Show Artikel
 	CATFISH menghadirkan fitur yang saling terintegrasi di antara kedua jenis user, User Reguler dapat melihat artikel yang dibuat oleh Article Writer pada halaman homepage.
 
 
-Article Writer
-Add Artikel
+- Article Writer
+1. Add Artikel
 CATFISH mewadahi user untuk memberikan informasi dengan mudah dan efisien, dengan fitur ini user dapat membuat artikel yang dapat dilihat oleh user hanya dengan menginput form.
-Delete Artikel
+2. Delete Artikel
 Untuk menunjang fleksibilitas, user dapat menghapus artikel yang sudah dibuat dengan mudah dalam fitur ini.
-Show Artikel
+3. Show Artikel
 	User Article Writer dapat melihat timeline artikel yang telah dibuat oleh Article Writer lainnya pada halaman homepage.
 
 
-Keterangan Tambahan
-Baik User Reguler maupun Article Writer memiliki peran masing-masing dalam menggunakan aplikasi CATFISH (unique user role), artinya satu akun dari user hanya mengambil satu peran baik itu User Reguler maupun Article Writer, apabila user akan menikmati peran yang lain, user harus membuat akun yang baru pada role yang berbeda..
-
+#### Keterangan Tambahan
+Baik User Reguler maupun Article Writer memiliki peran masing-masing dalam menggunakan aplikasi CATFISH (unique user role), artinya satu akun dari user hanya mengambil satu peran baik itu User Reguler maupun Article Writer, apabila user akan menikmati peran yang lain, user harus membuat akun yang baru pada role yang berbeda.
