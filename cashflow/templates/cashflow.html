@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<style>
+    body{
+        background-color: whitesmoke;
+        font-family: "Helvetica";
+    }
+    .cardstyle{
+        width: 256px;
+        height: 320px;
+        background: whitesmoke;
+        box-shadow: 0px 10px 22px 8px rgba(0, 0, 0, 0.11);
+        border-radius: 21px;
+    }
+    .card{
+        margin-right: 20px;
+        margin-left:20px
+    }
+    .btn-success{
+        background-color: #5db075;
+    }
+    .btn-pos{
+        position: absolute;
+        top: 70%;
+        height: 8%;
+        width: 70%;
+        left: 15%;
+        text-align: center;
+        padding: 0px;
+        border-radius: 20px;
+    }
+    .btn-pos-2{
+
+        height: 6%;
+        width: 50%;
+        left: 25%;
+        margin-top: 20px;
+        box-shadow: 0px 10px 22px 8px rgba(0, 0, 0, 0.11);
+        text-align: center;
+        line-height: 250%;
+        padding: 0px;
+        border-radius: 20px;
+    }
+    #img-1{
+        position: absolute;
+        top: 20%;
+        height: 30%;
+        right: 0%;
+
+    }
+    #img-2{
+        position: absolute;
+        top: 15%;
+        height: 35%;
+        right: 0%;
+    }
+    h1{
+        font-weight: 700;
+        /* identical to box height */
+
+        text-align: center;
+
+        color: #28362F;
+    }
+
+    @media only screen and (min-width:768px) and (max-width:991px){
+
+    }
+
+</style>
+</head>
+
+<body>
+    <div class="container-fluid ">
+        <div class="container" style="margin-top:8%">
+            <div class="row justify-content-center">
+                <h1>Cashflow Tracker</h1>
+            </div>
+            <div class ="row row-cols-sm-2 row-cols-xs-1 justify-content-center">
+              <div class="card cardstyle">
+                  <img class="card-img-top" id="img-1"  src="{% static 'svg/income.svg' %}"" alt="Card image cap">
+                  <div class="card-body">
+                      <a href="{% url 'cashflow:show_my_income'%}" class="btn btn-success btn-pos">My Income</a>
+                  </div>
+              </div>
+              <div class="card cardstyle" >
+                  <img class="card-img-top" id="img-2"  src="{% static 'svg/spending.svg' %}" alt="Card image cap">
+                  <div class="card-body">
+                      <a href="" class="btn btn-success btn-pos">My Spending</a>
+                  </div>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+                <a href="" class="btn btn-success btn-pos-2">My Cashflow Recap</a>
+            </div>
+    </div>
+</body>
+
+
+{% endblock content %}
