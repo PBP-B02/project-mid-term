@@ -64,7 +64,7 @@
                             <td>${spendings[i].fields.name}</td>
                             <td>${spendings[i].fields.spending_type}</td>
                             <td>${spendings[i].fields.amount}</td>
-                            <td><button class="btn btn-danger" onclick = "deleteIncome(${spendings[i].pk})">X</button></td>
+                            <td><button class="btn btn-danger" onclick = "deleteSpending(${spendings[i].pk})">X</button></td>
                             </tr>`)
                 
             }
@@ -84,7 +84,7 @@
                             <td>${new_spending.fields.name}</td>
                             <td>${new_spending.fields.spending_type}</td>
                             <td>${new_spending.fields.amount}</td>
-                            <td><button class="btn btn-danger" onclick = "deleteIncome(${new_spending.pk})">X</button></td>
+                            <td><button class="btn btn-danger" onclick = "deleteSpending(${new_spending.pk})">X</button></td>
                             </tr>`) 
         }
             )
@@ -115,11 +115,12 @@
             $('#salaryModal').modal('show');
         });
 
-        deleteIncome = (id) => {
+        deleteSpending = (id) => {
         $.ajax({
           url: `/cashflow/delete-spending/${id}`,
           type: 'DELETE',
           success: function(response){
+            console.log("halo")
             $(`#${id}--task`).remove()
             window.location.reload()
           }
