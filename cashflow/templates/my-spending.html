@@ -19,10 +19,34 @@
         color: #28362F;
         text-align: center;
     }
-    .choices-img{
+
+    
+    .container-icon{
+        position: relative;
         border-radius: 20px;
         height: 90px;
-        box-shadow: 0px 10px 22px 8px rgba(0, 0, 0, 0.11);
+        width: 90px;
+        margin: auto;
+        transition: transform .2s;
+        box-shadow: 0px 6px 20px 6px rgba(0, 0, 0, 0.11);
+    }
+    .choices-img{
+        height: 40px;
+        width: 40px;
+        margin-left: 13px;
+        margin-right: 25px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+    .container-icon:hover{
+        transform: scale(1.1);
+    }
+    .button-icon{
+        height: 90px;
+        width: 90px;
+        margin-right: 15px;
+        margin-left: 15px;
+
     }
 
 
@@ -31,42 +55,69 @@
       
     <script type="text/javascript" language="javascript">
     $(document).ready(function(){
-        $.get("/cashflow/json/income", function(incomes) {
-            console.log(incomes);
-            for (i = 0; i < incomes.length; i++){
-                $(".income").append(`<tr>
+        $.get("/cashflow/json/spending", function(spendings) {
+            console.log(spendings);
+            for (i = 0; i < spendings.length; i++){
+                $(".spending").append(`<tr>
                             <th scope="row">${i+1}</th>
-                            <td>${incomes[i].fields.date}</td>
-                            <td>${incomes[i].fields.name}</td>
-                            <td>${incomes[i].fields.income_type}</td>
-                            <td>${incomes[i].fields.amount}</td>
-                            <td><button class="btn btn-danger" onclick = "deleteIncome(${incomes[i].pk})">X</button></td>
+                            <td>${spendings[i].fields.date}</td>
+                            <td>${spendings[i].fields.name}</td>
+                            <td>${spendings[i].fields.spending_type}</td>
+                            <td>${spendings[i].fields.amount}</td>
+                            <td><button class="btn btn-danger" onclick = "deleteIncome(${spendings[i].pk})">X</button></td>
                             </tr>`)
                 
             }
         });
         $("#submit").click(function(){
-          $.post("/cashflow/add-income/", {
+          $.post("/cashflow/add-spending/", {
+
             name : $('#name').val(),
             amount: $('#amount').val(),
-            income_type: $( "#income-type option:selected" ).text()},
-            function(new_income) {
-            console.log(new_income);
-            $(".income").append(`<tr>
+            date: $('#date').val(),
+            spending_type: $("#spending_type").val()},
+            function(new_spending) {
+            console.log(new_spending);
+            $(".spending").append(`<tr>
                             <th scope="row">${i+1}</th>
-                            <td>${new_income.fields.date}</td>
-                            <td>${new_income.fields.name}</td>
-                            <td>${new_income.fields.income_type}</td>
-                            <td>${new_income.fields.amount}</td>
-                            <td><button class="btn btn-danger" onclick = "deleteIncome(${new_income.pk})">X</button></td>
+                            <td>${new_spending.fields.date}</td>
+                            <td>${new_spending.fields.name}</td>
+                            <td>${new_spending.fields.spending_type}</td>
+                            <td>${new_spending.fields.amount}</td>
+                            <td><button class="btn btn-danger" onclick = "deleteIncome(${new_spending.pk})">X</button></td>
                             </tr>`) 
         }
             )
           })
 
+        $("#foodButton").click(function(){
+            $("#spending_type").val("Food"); 
+            $('#salaryModal').modal('show');
+        });
+        $("#clothButton").click(function(){
+            $("#spending_type").val("Clothing"); 
+            $('#salaryModal').modal('show');
+        });
+        $("#utilitiesButton").click(function(){
+            $("#spending_type").val("Utilities"); 
+            $('#salaryModal').modal('show');
+        });
+        $("#transportButton").click(function(){
+            $("#spending_type").val("Transportation"); 
+            $('#salaryModal').modal('show');
+        });
+        $("#savingButton").click(function(){
+            $("#spending_type").val("Saving"); 
+            $('#salaryModal').modal('show');
+        });
+        $("#otherButton").click(function(){
+            $("#spending_type").val("Others"); 
+            $('#salaryModal').modal('show');
+        });
+
         deleteIncome = (id) => {
         $.ajax({
-          url: `/cashflow/delete-income/${id}`,
+          url: `/cashflow/delete-spending/${id}`,
           type: 'DELETE',
           success: function(response){
             $(`#${id}--task`).remove()
@@ -74,6 +125,10 @@
           }
         })
       }
+      $('#salaryModal').on('hidden.bs.modal', function (e) {
+            $('#form-adder').find("input[type=text], textarea").val("");
+            $('#form-adder').find("input[type=number], textarea").val("");
+      })
         // function deleteIncome(id){
         //     $.ajax({
         //         url: "/cashflow/json/income/"+id,
@@ -110,7 +165,7 @@
                             <th scope="col">Delete</th>
                             </tr>
                         </thead>
-                        <tbody class="income">
+                        <tbody class="spending">
                         </tbody>
                     </table>
                 </div>
@@ -119,21 +174,37 @@
                 <h5>Add new:</h5>
             </div>
             <div class="row justify-content-center row-cols-3">
-                <div class="col-1">
-                    <a href="#"data-bs-toggle="modal" data-bs-target="#salaryModal">
-                        <img class="choices-img" src="{% static 'img/salary.png' %}" >
-                    </a>
-                </div>
-                <div class="col-1">
-                    <a href="#"data-bs-toggle="modal" data-bs-target="#salaryModal">
-                        <img class="choices-img" src="{% static 'img/passive.png' %}" >
-                    </a>
-                </div>
-                <div class="col-1">
-                    <a href="#"data-bs-toggle="modal" data-bs-target="#salaryModal">
-                        <img class="choices-img" src="{% static 'img/others.png' %}" >
-                    </a>
-                </div>
+                <a id="foodButton" class="button-icon" href="#">
+                <div class="col-1 container-icon container">
+                    <img class="choices-img" src="{% static 'img/food.png' %}" >
+                    </div>
+                </a>
+                <a id="clothButton" class="button-icon" href="#">
+                <div class="col-1 container-icon container">
+                        <img class="choices-img" src="{% static 'img/cloth.png' %}" >
+                    </div>
+                </a>
+                <a id="utilitiesButton" class="button-icon" href="#">
+                <div class="col-1 container-icon container">
+                        <img class="choices-img" src="{% static 'img/utilities.png' %}" >
+                    </div>
+                </a>
+                <a id="transportButton" class="button-icon" href="#">
+                <div class="col-1 container-icon container">
+                        <img class="choices-img" src="{% static 'img/transport.png' %}" >
+                    </div>
+                </a>
+                <a id="savingButton" class="button-icon" href="#">
+                <div class="col-1 container-icon container">
+                        <img class="choices-img" src="{% static 'img/saving.png' %}" >
+                    </div>
+                </a>
+                <a id="otherButton" class="button-icon" href="#">
+                <div class="col-1 container-icon container">
+                        <img class="choices-img" src="{% static 'img/otheroption.png' %}" >
+                    </div>
+                </a>
+                
             </div>
             <div class="row justify-content-center" style="margin-top: 20px;">
                 <a class="btn btn-primary" href="{% url 'cashflow:show_cashflow'%}" style="width: 100px ;">Back</a>
@@ -147,29 +218,29 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="salaryModalLabel">Add New Income</h1>
+          <h1 class="modal-title fs-5" id="salaryModalLabel">Add New Spending</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form method="POST" action="">
+            <form id="form-adder" method="POST" action="">
                 {% csrf_token %}
                 <table>
                     <tr>
                         <td>Name: </td>
-                        <td><input type="text" name="title" placeholder="Income name.." class="form-control" id="name"></td>
+                        <td><input type="text" name="title" placeholder="Spending name.." autofocus required class="form-control" id="name"></td>
                     </tr>
                             
                     <tr>
                         <td>Amount: </td>
-                        <td><input type="text" name="description" placeholder="Amount.." class="form-control" id="amount"></td>
+                        <td><input type="number" name="amount" placeholder="Amount.." required class="form-control" id="amount" step="1000"></td>
+                    </tr>
+                    <tr>
+                        <td>Date: </td>
+                        <td><input type="date" name="date" value="2022-01-01" placeholder="Amount.." required class="form-control" id="date"></td>
                     </tr>
                     <tr>
                         <td>Type: </td>
-                        <td><select class="form-select" id="income-type" aria-label="Default select example">
-                            <option value="1">Salary</option>
-                            <option value="2">Passive</option>
-                            <option value="3">Others</option>
-                          </select></td>
+                        <td><input type="text" name="spending_type" placeholder="Income name.." disabled="disabled" required class="form-control" id="spending_type"></td>
                     </tr>
                     
                 </table>
@@ -178,7 +249,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" id="submit" data-bs-dismiss="modal" class="btn btn-success">Add</button>
+          <button type="submit" id="submit" data-bs-dismiss="modal" class="btn btn-success">Add</button>
         </div>
       </div>
     </div>

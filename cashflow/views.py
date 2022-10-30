@@ -62,8 +62,9 @@ def add_income(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         amount = request.POST.get('amount')
+        date = request.POST.get('date')
         income_type = request.POST.get('income_type')
-        new_income = Income.objects.create(name = name, amount = amount, date = datetime.date.today(), user=request.user, income_type=income_type)
+        new_income = Income.objects.create(name = name, amount = amount, date = date, user=request.user, income_type=income_type)
         new_income = {
             'pk' : new_income.pk,
             'fields':{
@@ -89,7 +90,7 @@ def add_spending(request):
                 'name':new_spending.name,
                 'amount':new_spending.amount,
                 'date':new_spending.date,
-                'income_type':new_spending.spending_type
+                'spending_type':new_spending.spending_type
             }
         }
         return JsonResponse(new_spending);

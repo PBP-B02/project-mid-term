@@ -19,10 +19,33 @@
         color: #28362F;
         text-align: center;
     }
-    .choices-img{
+
+    .container-icon{
+        position: relative;
         border-radius: 20px;
         height: 90px;
-        box-shadow: 0px 10px 22px 8px rgba(0, 0, 0, 0.11);
+        width: 90px;
+        margin: auto;
+        transition: transform .2s;
+        box-shadow: 0px 6px 20px 6px rgba(0, 0, 0, 0.11);
+    }
+    .choices-img{
+        height: 50px;
+        width: 50px;
+        margin-left: 8px;
+        margin-right: 25px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .container-icon:hover{
+        transform: scale(1.1);
+    }
+    .button-icon{
+        height: 90px;
+        width: 90px;
+        margin-right: 15px;
+        margin-left: 15px;
+
     }
 
 
@@ -47,9 +70,11 @@
         });
         $("#submit").click(function(){
           $.post("/cashflow/add-income/", {
+
             name : $('#name').val(),
             amount: $('#amount').val(),
-            income_type: $( "#income-type option:selected" ).text()},
+            date: $('#date').val(),
+            income_type: $("#income_type").val()},
             function(new_income) {
             console.log(new_income);
             $(".income").append(`<tr>
@@ -64,6 +89,21 @@
             )
           })
 
+        $("#salaryButton").click(function(){
+            $("#income_type").val("Salary"); 
+            $('#salaryModal').modal('show');
+        });
+        
+        $("#passiveButton").click(function(){
+            $("#income_type").val("Passive"); 
+            $('#salaryModal').modal('show');
+        });
+
+        $("#othersButton").click(function(){
+            $("#income_type").val("Others"); 
+            $('#salaryModal').modal('show');
+        });
+
         deleteIncome = (id) => {
         $.ajax({
           url: `/cashflow/delete-income/${id}`,
@@ -74,6 +114,10 @@
           }
         })
       }
+      $('#salaryModal').on('hidden.bs.modal', function (e) {
+            $('#form-adder').find("input[type=text], textarea").val("");
+            $('#form-adder').find("input[type=number], textarea").val("");
+      })
         // function deleteIncome(id){
         //     $.ajax({
         //         url: "/cashflow/json/income/"+id,
@@ -119,21 +163,22 @@
                 <h5>Add new:</h5>
             </div>
             <div class="row justify-content-center row-cols-3">
-                <div class="col-1">
-                    <a href="#"data-bs-toggle="modal" data-bs-target="#salaryModal">
-                        <img class="choices-img" src="{% static 'img/salary.png' %}" >
-                    </a>
-                </div>
-                <div class="col-1">
-                    <a href="#"data-bs-toggle="modal" data-bs-target="#salaryModal">
-                        <img class="choices-img" src="{% static 'img/passive.png' %}" >
-                    </a>
-                </div>
-                <div class="col-1">
-                    <a href="#"data-bs-toggle="modal" data-bs-target="#salaryModal">
-                        <img class="choices-img" src="{% static 'img/others.png' %}" >
-                    </a>
-                </div>
+                <a id="salaryButton" class="button-icon" href="#">
+                    <div class="col-1 container-icon container">
+                        <img class="choices-img" src="{% static 'img/salary2.png' %}" >
+                    </div>
+                </a>
+                <a id="passiveButton" class="button-icon" href="#">
+                    <div class="col-1 container-icon container">
+                        <img class="choices-img" src="{% static 'img/passive2.png' %}" >
+                    </div>
+                </a>
+                <a id="othersButton" class="button-icon" href="#">
+                    <div class="col-1 container-icon container">
+                        <img class="choices-img" src="{% static 'img/otheroption.png' %}" >
+                    </div>
+                </a>
+                
             </div>
             <div class="row justify-content-center" style="margin-top: 20px;">
                 <a class="btn btn-primary" href="{% url 'cashflow:show_cashflow'%}" style="width: 100px ;">Back</a>
@@ -151,25 +196,25 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form method="POST" action="">
+            <form id="form-adder" method="POST" action="">
                 {% csrf_token %}
                 <table>
                     <tr>
                         <td>Name: </td>
-                        <td><input type="text" name="title" placeholder="Income name.." class="form-control" id="name"></td>
+                        <td><input type="text" name="title" placeholder="Income name.." autofocus required class="form-control" id="name"></td>
                     </tr>
                             
                     <tr>
                         <td>Amount: </td>
-                        <td><input type="text" name="description" placeholder="Amount.." class="form-control" id="amount"></td>
+                        <td><input type="number" name="amount" placeholder="Amount.." required class="form-control" id="amount" step="1000"></td>
+                    </tr>
+                    <tr>
+                        <td>Date: </td>
+                        <td><input type="date" name="date" value="2022-01-01" placeholder="Amount.." required class="form-control" id="date"></td>
                     </tr>
                     <tr>
                         <td>Type: </td>
-                        <td><select class="form-select" id="income-type" aria-label="Default select example">
-                            <option value="1">Salary</option>
-                            <option value="2">Passive</option>
-                            <option value="3">Others</option>
-                          </select></td>
+                        <td><input type="text" name="income_type" placeholder="Income name.." disabled="disabled" required class="form-control" id="income_type"></td>
                     </tr>
                     
                 </table>
@@ -178,7 +223,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" id="submit" data-bs-dismiss="modal" class="btn btn-success">Add</button>
+          <button type="submit" id="submit" data-bs-dismiss="modal" class="btn btn-success">Add</button>
         </div>
       </div>
     </div>
