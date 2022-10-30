@@ -58,7 +58,7 @@
         $.get("/cashflow/json/spending", function(spendings) {
             console.log(spendings);
             for (i = 0; i < spendings.length; i++){
-                $(".spending").append(`<tr>
+                $(".spending").append(`<tr id="${spendings[i].fields.pk}_spending">
                             <th scope="row">${i+1}</th>
                             <td>${spendings[i].fields.date}</td>
                             <td>${spendings[i].fields.name}</td>
@@ -78,7 +78,7 @@
             spending_type: $("#spending_type").val()},
             function(new_spending) {
             console.log(new_spending);
-            $(".spending").append(`<tr>
+            $(".spending").append(`<tr id="${new_spending.pk}_spending">
                             <th scope="row">${i+1}</th>
                             <td>${new_spending.fields.date}</td>
                             <td>${new_spending.fields.name}</td>
@@ -121,8 +121,7 @@
           type: 'DELETE',
           success: function(response){
             console.log("halo")
-            $(`#${id}--task`).remove()
-            window.location.reload()
+            $(`#${id}_spending`).remove()
           }
         })
       }
@@ -145,6 +144,7 @@
         // }
     }); 
     </script>
+    <title>CATFISH — My Spending</title>
 </head>
 
 <body>

@@ -57,7 +57,7 @@
         $.get("/cashflow/json/income", function(incomes) {
             console.log(incomes);
             for (i = 0; i < incomes.length; i++){
-                $(".income").append(`<tr>
+                $(".income").append(`<tr id="${incomes[i].pk}_income">
                             <th scope="row">${i+1}</th>
                             <td>${incomes[i].fields.date}</td>
                             <td>${incomes[i].fields.name}</td>
@@ -77,7 +77,7 @@
             income_type: $("#income_type").val()},
             function(new_income) {
             console.log(new_income);
-            $(".income").append(`<tr>
+            $(".income").append(`<tr id="${new_income.pk}_income">
                             <th scope="row">${i+1}</th>
                             <td>${new_income.fields.date}</td>
                             <td>${new_income.fields.name}</td>
@@ -109,8 +109,7 @@
           url: `/cashflow/delete-income/${id}`,
           type: 'DELETE',
           success: function(response){
-            $(`#${id}--task`).remove()
-            window.location.reload()
+            $(`#${id}_income`).remove()
           }
         })
       }
@@ -118,21 +117,9 @@
             $('#form-adder').find("input[type=text], textarea").val("");
             $('#form-adder').find("input[type=number], textarea").val("");
       })
-        // function deleteIncome(id){
-        //     $.ajax({
-        //         url: "/cashflow/json/income/"+id,
-        //         method: 'DELETE',
-        //         success: function(){
-        //             alert('success')
-        //         },
-        //         error: function(error){
-        //             alert(error)
-        //         }
-                
-        //     })
-        // }
     }); 
     </script>
+<title>CATFISH — My Income</title>
 </head>
 
 <body>
