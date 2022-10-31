@@ -91,9 +91,8 @@
         <form method ="POST" id = "comment-user">
             {% csrf_token %}
         <div class="add-comment">
-                <div>
-                    <input type="text" name="komentar" id="komentar">
-                </div>
+            {{ form.as_div }}
+              
                 <div>
                     <input type="submit" id="tambah-komentar">
                 </div>
@@ -107,7 +106,7 @@
                     <img src="image/Compfest Logo 1.jfif" alt="">
                 </div>
                 <div>
-                    <h4>User Name</h4>
+                    <h4>{{item.user}}</h4>
                     <p>{{item.comment_anonymous }}</p>
                 </div>
             </div>
