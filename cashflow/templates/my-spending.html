@@ -58,13 +58,13 @@
         $.get("/cashflow/json/spending", function(spendings) {
             console.log(spendings);
             for (i = 0; i < spendings.length; i++){
-                $(".spending").append(`<tr>
+                $(".spending").append(`<tr id="${spendings[i].pk}">
                             <th scope="row">${i+1}</th>
                             <td>${spendings[i].fields.date}</td>
                             <td>${spendings[i].fields.name}</td>
                             <td>${spendings[i].fields.spending_type}</td>
                             <td>${spendings[i].fields.amount}</td>
-                            <td><button class="btn btn-danger" onclick = "deleteIncome(${spendings[i].pk})">X</button></td>
+                            <td><button class="btn btn-danger" onclick = "deleteSpending(${spendings[i].pk})">X</button></td>
                             </tr>`)
                 
             }
@@ -78,13 +78,13 @@
             spending_type: $("#spending_type").val()},
             function(new_spending) {
             console.log(new_spending);
-            $(".spending").append(`<tr>
-                            <th scope="row">${i+1}</th>
+            $(".spending").append(`<tr id="${new_spending.pk}">
+                            <th scope="row">${new_spending.pk}</th>
                             <td>${new_spending.fields.date}</td>
                             <td>${new_spending.fields.name}</td>
                             <td>${new_spending.fields.spending_type}</td>
                             <td>${new_spending.fields.amount}</td>
-                            <td><button class="btn btn-danger" onclick = "deleteIncome(${new_spending.pk})">X</button></td>
+                            <td><button class="btn btn-danger" onclick = "deleteSpending(${new_spending.pk})">X</button></td>
                             </tr>`) 
         }
             )
@@ -115,12 +115,12 @@
             $('#salaryModal').modal('show');
         });
 
-        deleteIncome = (id) => {
+        deleteSpending = (id) => {
         $.ajax({
           url: `/cashflow/delete-spending/${id}`,
           type: 'DELETE',
           success: function(response){
-            $(`#${id}--task`).remove()
+            $(`#${id}`).remove()
             window.location.reload()
           }
         })
@@ -162,7 +162,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Type</th>
                             <th scope="col">Amount</th>
-                            <th scope="col">Delete</th>
+                            <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody class="spending">

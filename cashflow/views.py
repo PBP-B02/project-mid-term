@@ -40,15 +40,18 @@ def show_json_spending_by_id(request,id):
     data = Spending.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json",data), content_type="application/json")
 
+@login_required(login_url='/login')
 @csrf_exempt
 def delete_income(request,id):
     if request.method == 'DELETE':
         Income.objects.filter(pk=id).delete()
         return HttpResponse(status=202)
 
+@login_required(login_url='/login')
+@csrf_exempt
 def delete_spending(request,id):
     if request.method == 'DELETE':
-        Income.objects.filter(pk=id).delete()
+        Spending.objects.filter(pk=id).delete()
         return HttpResponse(status=202)
 
 @login_required(login_url='/login')
@@ -95,3 +98,5 @@ def add_spending(request):
         }
         return JsonResponse(new_spending);
 
+def show_history(request):
+    return render(request, 'history.html')
