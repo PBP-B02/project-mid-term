@@ -1,0 +1,115 @@
+{% extends 'base.html' %} {% load static %}
+{% block meta %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+<script>
+   $(document).ready(function () {
+    $.get(window.location.href + "json/", function (data) {
+      for (idx = 0; idx < data.length; idx++) {getField(data[idx]);deleteField(data[idx]);}});
+
+    $("#artikelbaru").submit(function (event) {
+      event.preventDefault();
+      $.post(window.location.href + "tambah-artikel/", {
+        judul: $("#judul").val(),
+        konten: $("#konten").val(),
+      }).done(function (data) {
+        getField(data);
+        deleteField(data);
+        $("#konten").val(""), $("#judul").val("");
+        const sectionCards = document.getElementById("content");
+        sectionCards.insertAdjacentHTML("beforestart", $(`#${data.pk}-card`));
+      });
+    });
+
+    function getField(data) {
+      $("#content").append(
+        `
+
+        <div id="${data.pk}-card" class="card hover-overlay" style="border-radius: 25rem; 15px; max-width:  height: fit-content; mx-5;background-color: #b094a2;">
+            <div class="card-body p-3 ">
+              <h5 class="card-title text-center m-2 ">${data.fields.judul}</h5>
+              <p class="card-text text-center m-2" style="font-size: 17px" >${data.fields.author}</p>
+              <p id="${data.pk}-status" class="card-text text-center m-2">${data.fields.konten}</p>
+              <div class="flex justify-content-center text-center m-2">
+                <a id="${data.pk}-delete" class="btn btn btn-danger text-center m-2">Delete Artikel</a>
+              </div>
+            </div>
+          </div>           
+        `
+      );
+    }
+    function deleteField(data) {
+      $(`#${data.pk}-delete`).click(function () {
+        $.post(window.location.href + `delete-artikel/${data.pk}/`, {}).done(
+          (res) => {
+            $(`#${data.pk}-card`).fadeOut();
+          }
+        );
+      });
+    }
+    
+    $(document).ready( function(){
+    $('.btn-close').click( function(){
+      $('.modal').toggle();
+    })
+  })
+
+  //button n
+  $(document).ready( function(){
+    $('.add-task').click( function(){
+      $('.modal').toggle();
+    })
+  })
+
+  const modalButton = document.getElementById('add-btn');
+  modalButton.click(() => {
+    alert(12);
+    $('.modal').toggle();
+  })  
+});
+</script>
+{% endblock meta %}
+{% block content %}
+
+
+<body>
+    <div id="content" class="content"></div>
+    <p>{{nama}}</p>
+      <form id = "artikelbaru">      
+        {% csrf_token %}
+        <!-- Message input -->
+        <div class="form-outline mb-4">
+          <textarea id="judul" class="form-control"  rows="4"></textarea>
+          <label class="form-label" for="form4Example3">judul</label>
+          {{form.judul}}
+        </div>
+    
+
+        <div class="form-outline mb-4">
+            <textarea id="konten" class="form-control" rows="4"></textarea>
+            <label class="form-label" for="form4Example3">deskripsi</label>
+          {{form.konten}}
+          </div>
+      
+          <!-- Submit button -->
+          <input type="submit" value="submit">
+
+
+        <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Send</button> -->
+      </form>
+       <!-- //////////////// -->
+       
+
+
+
+          <!-- ////////////////////// -->
+         
+      <script src="{% static 'scripts/jquery.min.js' %}"></script>
+      <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
+      <script src="{% static 'scripts/login.js' %}"></script>
+</body>
+</html>
+{% endblock content %}
+

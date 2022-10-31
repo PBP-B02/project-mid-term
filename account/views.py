@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 def register(response):
+    
     if response.user.is_authenticated:
         messages.warning(response, 'You have to logout your account first!')
         return redirect("/")
@@ -40,6 +41,7 @@ def update_profile(user_username, user_role, email):
     user.save()
 
 def login_view(request):
+
     if request.user.is_authenticated:
         messages.warning(request, 'You have to logout your account first!')
         return redirect("/")

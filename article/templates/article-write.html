@@ -1,0 +1,122 @@
+{% extends 'base.html' %}{% load static %}
+{% block meta %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+
+<script>
+   $(document).ready(function () {
+    $.get(window.location.href + "json/", function (data) {
+      for (idx = 0; idx < data.length; idx++) {getField(data[idx]);deleteField(data[idx]);}});
+
+    $("#artikelbaru").submit(function (event) {
+      event.preventDefault();
+      $.post(window.location.href + "tambah-artikel/", {
+        judul: $("#judul").val(),
+        konten: $("#konten").val(),
+      }).done(function (data) {
+        getField(data);
+        deleteField(data);
+        $("#konten").val(""), $("#judul").val("");
+        const sectionCards = document.getElementById("content");
+        sectionCards.insertAdjacentHTML("beforestart", $(`#${data.pk}-card`));
+      });
+    });
+
+    function getField(data) {
+      $("#content").append(
+        `
+        <div id="${data.pk}-card" class="card mb-3 m-5">      
+          <div class="card-body p-3" style="background-color:#edfaef" >
+            <h5 class="card-title">${data.fields.judul}</h5>
+            <p class="card-text">${data.fields.konten}</p>
+          </div>
+          <div class="card-footer" style="background-color: #5DB075 ">
+            <a id="${data.pk}-delete" class="btn btn btn-danger text-center m-2" ">Delete Artikel</a>
+          </div>
+        </div>         
+        `
+      );
+    }
+    function deleteField(data) {
+      $(`#${data.pk}-delete`).click(function () {
+        $.post(window.location.href + `delete-artikel/${data.pk}/`, {}).done(
+          (res) => {
+            $(`#${data.pk}-card`).fadeOut();
+          }
+        );
+      });
+    }
+    
+    $(document).ready( function(){
+    $('.btn-close').click( function(){
+      $('.modal').toggle();
+    })
+  })
+
+  //button n
+  $(document).ready( function(){
+    $('.add-artikel').click( function(){
+      $('.modal').toggle();
+    })
+  })
+
+  const modalButton = document.getElementById('add-btn');
+  modalButton.click(() => {
+    alert(12);
+    $('.modal').toggle();
+  })  
+});
+</script>
+<style>
+  .card:hover{
+    box-shadow: 4px 4px 2px rgb(108, 120, 130);
+    transform: scale(1.05);
+  }
+</style>
+{% endblock meta %}
+{% block content %}
+
+<!-- modal -->
+<body>
+  <h2 class="text-center m-4 font-monospace fw-bold" style="font-weight: bold; font-size: larger;" > The price of anything is the amount of life you exchange for it.  </h2>
+  <h6 class="text-center m-2">– Henry David Thoreau</h6>
+  <p class="text-center m-5 font-monospace fst-italic" >A 19th century American philosopher, poet and academic, Thoreau wore many hats. An advocate of living simply, this quote speaks to his suspicion of focusing too much on worldly possessions. His words still ring true today. Spending a lot of mental energy on worrying about what you (or others) have or don’t have is exhausting. Instead, focus on what matters most to you whether that’s family, friends or your future.</p>
+  <button id="add-btn" class="add-artikel btn btn-success m-5"> Tambah Artikel </button>
+  <div class="modal" style="background-color:#edfaef">
+    <div class ="card mb-3 m-5" style="background-color: #8e9681">
+      <div>
+        <h5 class="card-title text-center">Detail Artikel</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id = "artikelbaru" >      
+        {% csrf_token %}
+        <!-- Message input -->
+        <div class="form-outline mb-4">
+          <label for="judul" class = "fw-bold mb-2" >Judul</label>
+          {{ form.judul }}
+        </div>
+        <div class="form-outline mb-4">
+          <label for="konten" class="fw-bold mb-2">Konten</label>
+          {{ form.konten }}
+        </div>
+      
+          <!-- Submit button -->
+          <input type="submit" value="submit" >
+        <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Send</button> -->
+      </form>
+    </div>
+  </div>
+
+
+    <div id="content" class="content"></div>
+      
+      
+      <script src="{% static 'scripts/jquery.min.js' %}"></script>
+      <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
+      <script src="{% static 'scripts/login.js' %}"></script>
+</body>
+</html>
+{% endblock content %}
+
