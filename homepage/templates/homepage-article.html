@@ -1,0 +1,124 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel</title>
+
+     <!-- font type ubuntu connect -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    
+     <!-- css connect -->
+    <link rel="stylesheet" href="homepage-artikel.css">
+    <link rel="stylesheet" href="{% static 'css/homepage-artikel.css' %}">
+</head>
+<body>
+    <div class="header">
+
+        <div class="left">
+            <img src="image/Compfest Logo 1.jfif" alt="">
+            <div class="search-bar">
+                <form action="">
+                    <input class="search" type="search" placeholder="Search...">
+                    <input class="submit"type="submit">
+                </form>
+            </div>
+        </div>
+
+        <div class="right">
+            <button><img src="{% static 'images/cashflow-kel.png' %}" alt=""></button>
+            <button><img src="{% static 'images/logout-kel.png' %}" alt=""></button>
+        </div>
+    </div>
+
+    <div id="artikel">
+        <h3>Artikel Terupdate</h3>
+    </div>
+
+    <div class="content">
+       
+    
+        <div class="artikel">
+            <div class="page">
+                <h4>This is Judul</h4>
+                <p class="author">Author : Lorem ipsum dolor</p>
+                <p class="date">Date   : 26 Oktober 2022</p>
+                <button>Read</button>
+            </div>
+    
+            <div class="page">
+                <h4>This is Judul</h4>
+                <p class="author">Author : Lorem ipsum dolor</p>
+                <p class="date">Date   : 26 Oktober 2022</p>
+                <button>Read</button>
+            </div>
+    
+            <div class="page">
+                <h4>This is Judul</h4>
+                <p class="author">Author : Lorem ipsum dolor</p>
+                <p class="date">Date   : 26 Oktober 2022</p>
+                <button>Read</button>
+            </div>
+    
+            <div class="page">
+                <h4>This is Judul</h4>
+                <p class="author">Author : Lorem ipsum dolor</p>
+                <p class="date">Date   : 26 Oktober 2022</p>
+                <button>Read</button>
+            </div>
+    
+            <div class="page">
+                <h4>This is Judul</h4>
+                <p class="author">Author : Lorem ipsum dolor</p>
+                <p class="date">Date   : 26 Oktober 2022</p>
+                <button>Read</button>
+            </div>
+            <div class="page">
+                <h4>This is Judul</h4>
+                <p class="author">Author : Lorem ipsum dolor</p>
+                <p class="date">Date   : 26 Oktober 2022</p>
+                <button>Read</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment-page">
+        <h2>Komentar</h2>
+        <form method ="POST" id = "comment-user">
+            {% csrf_token %}
+        <div class="add-comment">
+                <div>
+                    <input type="text" name="komentar" id="komentar">
+                </div>
+                <div>
+                    <input type="submit" id="tambah-komentar">
+                </div>
+            </div>
+        </form>
+        <div class="display-comment">
+
+            {% for item in comment_item %}
+            <div class="comment-user">
+                <div>
+                    <img src="image/Compfest Logo 1.jfif" alt="">
+                </div>
+                <div>
+                    <h4>User Name</h4>
+                    <p>{{item.comment_anonymous }}</p>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+        
+    </div>
+    
+    
+    
+</body>
+</html>
+{% endblock content %}
