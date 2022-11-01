@@ -11,14 +11,12 @@ class FormArtikel(forms.ModelForm):
                 'required': True,
                 'name':"judul",
                 'id':"judul",
-                'style':"background-color: #c3c7bd",
                 'placeholder':"Title"
             }),
             'konten': forms.Textarea(attrs={
                 'required': True,
                 'name':"konten",
-                'id':"konten", 
-                'style':"background-color: #c3c7bd",		
+                'id':"konten", 		
                 'placeholder':"Content",
             }),
         }

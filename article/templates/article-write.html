@@ -84,15 +84,45 @@
   <h6 class="text-center m-2">– Henry David Thoreau</h6>
   <p class="text-center m-5 font-monospace fst-italic" >A 19th century American philosopher, poet and academic, Thoreau wore many hats. An advocate of living simply, this quote speaks to his suspicion of focusing too much on worldly possessions. His words still ring true today. Spending a lot of mental energy on worrying about what you (or others) have or don’t have is exhausting. Instead, focus on what matters most to you whether that’s family, friends or your future.</p>
   <button id="add-btn" class="add-artikel btn btn-success m-5"> Tambah Artikel </button>
-  <div class="modal" style="background-color:#edfaef">
+  <!-- <div class="modal" style="background-color:#edfaef">
     <div class ="card mb-3 m-5" style="background-color: #8e9681">
       <div>
         <h5 class="card-title text-center">Detail Artikel</h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form id = "artikelbaru" >      
-        {% csrf_token %}
+        {% csrf_token %} -->
         <!-- Message input -->
+        <!-- <div class="form-outline mb-4">
+          <label for="judul" class = "fw-bold mb-2" >Judul</label>
+          {{ form.judul }}
+        </div>
+        <div class="form-outline mb-4"> 
+          <label for="konten" class="fw-bold mb-2">Konten</label>
+          {{ form.konten }}
+        </div> -->
+      
+          <!-- Submit button -->
+          <!-- <input type="submit" value="submit" > -->
+        
+      <!-- </form>
+    </div>
+  </div> -->
+  <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+
+<div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detail Artikel</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id = "artikelbaru" >      
+        {% csrf_token %}
+      <div class="modal-body">
         <div class="form-outline mb-4">
           <label for="judul" class = "fw-bold mb-2" >Judul</label>
           {{ form.judul }}
@@ -101,13 +131,14 @@
           <label for="konten" class="fw-bold mb-2">Konten</label>
           {{ form.konten }}
         </div>
-      
-          <!-- Submit button -->
-          <input type="submit" value="submit" >
-        <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Send</button> -->
+      </div>
+      <div class="modal-footer">
+        <input type="submit" value="submit"  class ="btn btn-primary">
       </form>
+      </div>
     </div>
   </div>
+</div>
 
 
     <div id="content" class="content"></div>

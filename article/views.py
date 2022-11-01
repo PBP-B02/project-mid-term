@@ -26,6 +26,8 @@ def show_artikel(request):
     form = FormArtikel()
     context = {
         'form':form,
+        'user':request.user,
+        'last_login': request.COOKIES.get('last_login'),
     }
     
     if(request.user.profile.role == "writer"):
@@ -36,10 +38,10 @@ def show_artikel(request):
 @csrf_exempt
 def tambah_artikel(request):
         if request.method == "POST":
-            print('masuk')
             judul = request.POST.get("judul")
+            author= request.user
             konten = request.POST.get("konten")
-            artikel = Artikel(judul=judul, konten=konten)
+            artikel = Artikel(judul=judul,author=author, konten=konten)
             artikel.save()
         return JsonResponse({"pk":artikel.pk, "fields":
             {
@@ -57,6 +59,19 @@ def delete_artikel(request,id):
 def get_artikel_json(request):
     artikel = Artikel.objects.all()
     return HttpResponse(serializers.serialize("json", artikel),content_type="application/json")
+
+def get_artikel_json_by_id(request, id):
+    artikel = Artikel.objects.get(pk=id)
+    return HttpResponse(serializers.serialize('json', [artikel]), content_type='application/json')
+
+def get_artikel_by_id(request, id):
+    artikel = Artikel.objects.get(pk=id)
+    context = {
+        'artikel': artikel
+    }
+    return render(request, 'artikel-id.html', context)
+
+
 
 
         
