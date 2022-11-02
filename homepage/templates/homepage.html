@@ -67,10 +67,30 @@
             </div>
             
         </div>
+        <div class="sub">
+               {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == "warning" %}
+                            <div class="alert alert-main" role="alert">
+                                <p class="fg-warn"> {{ message }} </p>
+                            </div>
+                        {% elif message.tags == "success" %}
+                            <div class="alert alert-alt" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+        </div>        
+        {% if user.is_authenticated %}
+            <article class="hello">Hello, {{ user.username }}</article>
+            <button class="signup"><a href="/logout">Logout</a></button>
+        {% else %}
         <div class="button-user">
-            <button class="login"><a href="/register/"> Login</a></button>
-            <button class="signup"><a href="/register/">Signup</a></button>
+            <button class="login"><a href="/login"> Login</a></button>
+            <button class="signup"><a href="/register">Signup</a></button>
         </div>
+        {% endif %}
 
     </div>
 
