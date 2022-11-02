@@ -2,11 +2,22 @@ $(document).ready(function () {
   $('form').submit(function (e) {
     e.preventDefault();
     var budgetVal = $('#id_budget_type').val();
+
+    // konversi ke dalam format mata uang rupiah
+    const rupiah = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0,
+    });
+
     if (budgetVal == 'income') {
       let totalIncome;
+      let monthlyData;
+
+      // menghitung total amount income
       $.get('/cashflow/json/income', function (incomes) {
         const monthVal = $('#id_month_field').val();
-        const monthlyData = incomes.filter((obj) => {
+        monthlyData = incomes.filter((obj) => {
           let monthNum = new Date(obj.fields.date).getMonth();
           return monthNum == monthVal;
         });
@@ -14,8 +25,10 @@ $(document).ready(function () {
           const amount = data.fields.amount;
           return total + amount;
         }, 0);
-        console.log(totalIncome);
-        console.log(budgetVal);
+        $(`#totalAmount`).empty();
+        $('#totalAmount').append(`<h5>Total ${budgetVal} : ${rupiah.format(totalIncome)}</h5>`);
+
+        // mengirimkan data history baru ke views
         $.post(
           '/history/add-history/',
           {
@@ -27,12 +40,27 @@ $(document).ready(function () {
             console.log(new_history);
           }
         );
+
+        // menampilkan data income sesuai bulan
+        $(`.history`).empty();
+        for (i = 0; i < monthlyData.length; i++) {
+          $('.history').append(`<tr id="${monthlyData[i].pk}_income">
+                      <th scope="row">${i + 1}</th>
+                      <td>${monthlyData[i].fields.date}</td>
+                      <td>${monthlyData[i].fields.name}</td>
+                      <td>${monthlyData[i].fields.income_type}</td>
+                      <td>${rupiah.format(monthlyData[i].fields.amount)}</td>
+                      </tr>`);
+        }
       });
     } else if (budgetVal == 'spending') {
       let totalSpending;
+      let monthlyData;
+
+      // menghitung total amount spending
       $.get('/cashflow/json/spending', function (spending) {
         const monthVal = $('#id_month_field').val();
-        const monthlyData = spending.filter((obj) => {
+        monthlyData = spending.filter((obj) => {
           let monthNum = new Date(obj.fields.date).getMonth();
           return monthNum == monthVal;
         });
@@ -40,7 +68,10 @@ $(document).ready(function () {
           const amount = data.fields.amount;
           return total + amount;
         }, 0);
-        console.log(totalSpending);
+        $(`#totalAmount`).empty();
+        $('#totalAmount').append(`<h5>Total ${budgetVal} : ${rupiah.format(totalSpending)}</h5>`);
+
+        // mengirimkan data history baru ke views
         $.post(
           '/history/add-history/',
           {
@@ -52,17 +83,19 @@ $(document).ready(function () {
             console.log(new_history);
           }
         );
+
+        // menampilkan data spending sesuai bulan
+        $(`.history`).empty();
+        for (i = 0; i < monthlyData.length; i++) {
+          $('.history').append(`<tr id="${monthlyData[i].pk}_income">
+                      <th scope="row">${i + 1}</th>
+                      <td>${monthlyData[i].fields.date}</td>
+                      <td>${monthlyData[i].fields.name}</td>
+                      <td>${monthlyData[i].fields.income_type}</td>
+                      <td>${rupiah.format(monthlyData[i].fields.amount)}</td>
+                      </tr>`);
+        }
       });
     }
-
-    // $.get('/history/json/', function (history) {
-    //   console.log(history);
-    // });
   });
-  // $('#id_budget_type_0').click(function () {
-  //   $("input[type='radio'][id='id_budget_type_0']:checked").val('income');
-  // });
-  // $('#id_budget_type_1').click(function () {
-  //   $("input[type='radio'][id='id_budget_type_0']:checked").val('income');
-  // });
 });

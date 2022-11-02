@@ -9,71 +9,42 @@
   <div class="container-fluid">
     <div class="container" style="margin-top: 5%">
       <div class="row justify-content-center">
-        <h1>Budget History</h1>
+        <h1>Cashflow Recap</h1>
       </div>
       <div class="row justify-content-center" style="margin-top: 20px">
         <form class="d-flex justify-content-center" action="" method="POST">
           <input type="hidden" name="csrfmiddlewaretoken" value="fTx51QnuqqYmUmE0Ynr7uOQfknA9Fz3mgnUWEWEzKtiD8k9yiSsru6AfgYRYSZ3a" />
-          {% comment %} <input type="radio" class="btn-check" autocomplete="off" name="options-outlined" value="income" required id="id_budget_type_0" />
-          <label class="btn btn-outline-success" for="id_budget_type_0"> Income </label>
-          <input type="radio" class="btn-check" autocomplete="off" name="options-outlined" value="spending" required id="id_budget_type_1" />
-          <label class="btn btn-outline-success" for="id_budget_type_1"> Spending </label> {% endcomment %} {% comment %}
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
-            <label class="form-check-label" for="inlineRadio1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
-            <label class="form-check-label" for="inlineRadio2">2</label>
-          </div>
-          {% endcomment %}
-
           <div class="form-check form-check-inline">{{form.as_p}}</div>
 
           <select style="height: 27px" name="month_field" id="id_month_field" required>
             <option selected>Choose month</option>
-
             <option value="0">January</option>
-
             <option value="1">February</option>
-
             <option value="2">March</option>
-
             <option value="3">April</option>
-
             <option value="4">May</option>
-
             <option value="5">June</option>
-
             <option value="6">July</option>
-
             <option value="7">August</option>
-
             <option value="8">September</option>
-
             <option value="9">October</option>
-
             <option value="10">November</option>
-
             <option value="11">December</option>
           </select>
           <button style="margin-left: 15px; height: 27px" type="submit" class="btn btn-outline-primary btn-sm">Show</button>
         </form>
       </div>
-      <div class="row justify-content-center row-cols-3"></div>
+      <div class="row justify-content-center row-cols-3" id="totalAmount"></div>
       <div class="row justify-content-center">
         <div class="container overflow-auto" style="height: 350px; box-shadow: 0px 10px 22px 8px rgba(0, 0, 0, 0.11)">
-          <table class="table table-responsive">
+          <table class="table table-striped">
             <thead>
               <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th scope="col">No</th>
                 <th scope="col">Date</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
                 <th scope="col">Amount</th>
-                <th></th>
               </tr>
             </thead>
             <tbody class="history"></tbody>
