@@ -25,4 +25,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('auth/', include('account.urls')),
     path('artikel/',include('article.urls')),
+    path('cashflow/', include('cashflow.urls')),
+    path('history/', include('history.urls')),
+
 ]
