@@ -57,13 +57,18 @@
     $(document).ready(function(){
         $.get("/cashflow/json/spending", function(spendings) {
             console.log(spendings);
+            const rupiah = new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                maximumFractionDigits:0,
+            });
             for (i = 0; i < spendings.length; i++){
                 $(".spending").append(`<tr id="${spendings[i].fields.pk}_spending">
                             <th scope="row">${i+1}</th>
                             <td>${spendings[i].fields.date}</td>
                             <td>${spendings[i].fields.name}</td>
                             <td>${spendings[i].fields.spending_type}</td>
-                            <td>${spendings[i].fields.amount}</td>
+                            <td>${rupiah.format(spendings[i].fields.amount)}</td>
                             <td><button class="btn btn-danger" onclick = "deleteSpending(${spendings[i].pk})">X</button></td>
                             </tr>`)
                 
@@ -78,12 +83,17 @@
             spending_type: $("#spending_type").val()},
             function(new_spending) {
             console.log(new_spending);
+            const rupiah = new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                maximumFractionDigits:0,
+            });
             $(".spending").append(`<tr id="${new_spending.pk}_spending">
                             <th scope="row">${i+1}</th>
                             <td>${new_spending.fields.date}</td>
                             <td>${new_spending.fields.name}</td>
                             <td>${new_spending.fields.spending_type}</td>
-                            <td>${new_spending.fields.amount}</td>
+                            <td>${rupiah.format(new_spending.fields.amount)}</td>
                             <td><button class="btn btn-danger" onclick = "deleteSpending(${new_spending.pk})">X</button></td>
                             </tr>`) 
         }
@@ -220,7 +230,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="salaryModalLabel">Add New Spending</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <form id="form-adder" method="POST" action="">

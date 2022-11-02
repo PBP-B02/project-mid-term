@@ -24,6 +24,7 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('auth/', include('account.urls')),
-    path('cashflow/', include('cashflow.urls'))
+    path('cashflow/', include('cashflow.urls')),
+    path('history/', include('history.urls')),
 
 ]
