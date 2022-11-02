@@ -1,0 +1,81 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catfish</title>
+
+     <!-- font type ubuntu connect -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- css connect -->
+    <link rel="stylesheet" href="homepage.css">
+    <link rel="stylesheet" href="homepage-artikel.css">
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+
+   
+</head>
+
+<body>
+    <div class="header">
+        <img src="image/Compfest Logo 1.jfif" alt="" class="logo">
+
+        
+
+        <img src="image/hamburger-menu.svg" alt="" class="humberger-menu" id="humberger">
+    </div>
+    
+    <div class="content">
+
+        <div class="frame">
+
+          
+            <div class="content-cashflow">
+                
+                <div class="right-content">
+                    {% comment %} <img src="image/business _ graph, chart, analytics, statistics, presentation, project, woman, people.svg" alt=""> {% endcomment %}
+                    <img src="{% static 'images/image1.svg' %}" alt="">
+                </div>
+                
+                <div class="left-content">
+                    <h2>CashFlow</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, aliquam. Consequatur laboriosam dolore tempore. Dolorum, architecto iusto? Possimus, deleniti voluptates!</p>
+                    
+                </div>
+
+               
+                
+            </div>
+        
+            
+            <div class="content-article-writer">
+
+                <div class="right-content">
+                    {% comment %} <img src="image/media, web development _ website, webpage, browser, image, layout, picture, photo, woman, people.svg" alt=""> {% endcomment %}
+                    <img src="{% static 'images/image2.svg' %}" alt="">
+                </div>
+              
+                <div class="left-content">
+                    <h2>Article Writer</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, aliquam. Consequatur laboriosam dolore tempore. Dolorum, architecto iusto? Possimus, deleniti voluptates!</p>
+                </div>
+
+            </div>
+            
+        </div>
+        <div class="button-user">
+            <button class="login"><a href="/register/"> Login</a></button>
+            <button class="signup"><a href="/register/">Signup</a></button>
+        </div>
+
+    </div>
+
+  
+    
+</body>
+</html>
+{% endblock content %}
