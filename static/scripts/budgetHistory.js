@@ -21,6 +21,7 @@ $(document).ready(function () {
           let monthNum = new Date(obj.fields.date).getMonth();
           return monthNum == monthVal;
         });
+
         totalIncome = monthlyData.reduce((total, data) => {
           const amount = data.fields.amount;
           return total + amount;
@@ -87,11 +88,11 @@ $(document).ready(function () {
         // menampilkan data spending sesuai bulan
         $(`.history`).empty();
         for (i = 0; i < monthlyData.length; i++) {
-          $('.history').append(`<tr id="${monthlyData[i].pk}_income">
+          $('.history').append(`<tr id="${monthlyData[i].pk}_spending">
                       <th scope="row">${i + 1}</th>
                       <td>${monthlyData[i].fields.date}</td>
                       <td>${monthlyData[i].fields.name}</td>
-                      <td>${monthlyData[i].fields.income_type}</td>
+                      <td>${monthlyData[i].fields.spending_type}</td>
                       <td>${rupiah.format(monthlyData[i].fields.amount)}</td>
                       </tr>`);
         }
