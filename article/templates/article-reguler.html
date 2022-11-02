@@ -31,10 +31,12 @@
             <h5 class="card-title">${data.fields.judul}</h5>
             <p class="card-text">${(data.fields.konten).substring(0,200)}</p>
           </div>
+
           <div class="card-footer" style="background-color: #5DB075 ">
-            <a target="_blank" href="/artikel/${data.pk}" class="btn btn btn-primary text-center m-2" >Read more</a>
+            <a id="${data.pk}-delete" class="btn btn btn-danger text-center m-2" ">Delete Artikel</a>
+            <a href="/artikel/artikel/${data.pk}" class="btn btn btn-primary text-center m-2" >Read more</a>
           </div>
-        </div>            
+        </div>              
         `
       );
     }
@@ -54,9 +56,6 @@
   <h2 class="text-center m-4 font-monospace fw-bold" style="font-weight: bold; font-size: larger;" > The price of anything is the amount of life you exchange for it.  </h2>
   <h6 class="text-center m-2">– Henry David Thoreau</h6>
   <p class="text-center m-5 font-monospace fst-italic" >A 19th century American philosopher, poet and academic, Thoreau wore many hats. An advocate of living simply, this quote speaks to his suspicion of focusing too much on worldly possessions. His words still ring true today. Spending a lot of mental energy on worrying about what you (or others) have or don’t have is exhausting. Instead, focus on what matters most to you whether that’s family, friends or your future.</p>
-  <center>
-    <button id="add-btn" class="add-artikel btn btn-success m-5 "> Tambah Artikel </button>
-  </center>
     <div id="content" class="content"></div>
     <div>
       <center>
