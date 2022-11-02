@@ -1,0 +1,74 @@
+{% extends 'base.html' %} {% load static %}
+{% block meta %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+<script>
+   $(document).ready(function () {
+    $.get(window.location.href + "json/", function (data) {
+      for (idx = 0; idx < data.length; idx++) {getField(data[idx]);deleteField(data[idx]);}});
+
+    $("#artikelbaru").submit(function (event) {
+      event.preventDefault();
+      $.post(window.location.href + "tambah-artikel/", {
+        judul: $("#judul").val(),
+        konten: $("#konten").val(),
+      }).done(function (data) {
+        getField(data);
+        deleteField(data);
+        $("#konten").val(""), $("#judul").val("");
+        const sectionCards = document.getElementById("content");
+        sectionCards.insertAdjacentHTML("beforestart", $(`#${data.pk}-card`));
+      });
+    });
+
+    function getField(data) {
+      $("#content").append(
+        `
+        <div id="${data.pk}-card" class="card mb-3 m-5">      
+          <div class="card-body p-3" style="background-color:#edfaef" >
+            <h5 class="card-title">${data.fields.judul}</h5>
+            <p class="card-text">${(data.fields.konten).substring(0,200)}</p>
+          </div>
+          <div class="card-footer" style="background-color: #5DB075 ">
+            <a target="_blank" href="/artikel/${data.pk}" class="btn btn btn-primary text-center m-2" >Read more</a>
+          </div>
+        </div>            
+        `
+      );
+    }
+});
+</script>
+
+{% endblock meta %}
+{% block content %}
+
+
+<body>
+  <div>
+    <center>
+      <img src="https://img.freepik.com/free-vector/cashback-saving-money-concept-flat-illustration-set-buyer-characters-pay-online-cash-refund-purchase-credit-card-wallet-financial-savings-coins-loyalty-rewards-program_88138-830.jpg?w=1380&t=st=1667308330~exp=1667308930~hmac=4ef398c53caaf131cfb4722c772a815cd45e3548b9f2aa25cbd4d26a43c01b6b" alt="pict1">
+    </center>
+  </div>
+  <h2 class="text-center m-4 font-monospace fw-bold" style="font-weight: bold; font-size: larger;" > The price of anything is the amount of life you exchange for it.  </h2>
+  <h6 class="text-center m-2">– Henry David Thoreau</h6>
+  <p class="text-center m-5 font-monospace fst-italic" >A 19th century American philosopher, poet and academic, Thoreau wore many hats. An advocate of living simply, this quote speaks to his suspicion of focusing too much on worldly possessions. His words still ring true today. Spending a lot of mental energy on worrying about what you (or others) have or don’t have is exhausting. Instead, focus on what matters most to you whether that’s family, friends or your future.</p>
+  <center>
+    <button id="add-btn" class="add-artikel btn btn-success m-5 "> Tambah Artikel </button>
+  </center>
+    <div id="content" class="content"></div>
+    <div>
+      <center>
+        <img src="https://img.freepik.com/free-vector/happy-rich-banker-celebrating-income-growth_74855-5867.jpg?w=900&t=st=1667319801~exp=1667320401~hmac=bf8ea36bba98e0e622a0a616be4a08886853d543105640354d9124af7f9b42d6" alt="pict2" class="center">
+      </center>
+    </div>
+      
+         
+      <script src="{% static 'scripts/jquery.min.js' %}"></script>
+      <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
+      <script src="{% static 'scripts/login.js' %}"></script>
+</body>
+</html>
+{% endblock content %}
+
