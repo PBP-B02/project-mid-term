@@ -14,7 +14,7 @@ def register(response):
     
     if response.user.is_authenticated:
         messages.warning(response, 'You have to logout your account first!')
-        return redirect("/landingpage")
+        return redirect("/")
     else:
         if response.method == "POST":
             form = SignupForm(response.POST)
@@ -28,12 +28,12 @@ def register(response):
                     login(response, user)
                     update_profile(username, selected, email)
                     messages.success(response, f'Welcome to CATFISH, { user.username }')
-                    return redirect("/landingpage/homepage-cashflow")
+                    return redirect("/homepage-cashflow")
                 elif selected == 'writer':
                     login(response, user)
                     update_profile(username, selected, email)
                     messages.success(response, f'Welcome to CATFISH, { user.username }')
-                    return redirect("/landingpage/homepage-article")
+                    return redirect("/homepage-article")
 
         else:
             form = SignupForm()
@@ -50,7 +50,7 @@ def login_view(request):
 
     if request.user.is_authenticated:
         messages.warning(request, 'You have to logout your account first!')
-        return redirect("/landingpage")
+        return redirect("/")
     else:
         if request.method == "POST":
             form = LoginForm(data=request.POST)
@@ -58,10 +58,10 @@ def login_view(request):
                 user = form.get_user()
                 if user.profile.role == 'regular':
                     login(request, user)
-                    return redirect("/landingpage/homepage-cashflow")
+                    return redirect("/homepage-cashflow")
                 if user.profile.role == 'writer':
                     login(request, user)
-                    return redirect("/landingpage/homepage-article")
+                    return redirect("/homepage-article")
         else:
             form = LoginForm()
 
@@ -77,7 +77,7 @@ class ValidateLoginUsername(View):
 
 def logout_view(response):
     logout(response)
-    return redirect("/landingpage")
+    return redirect("/")
 
 class ValidateUsername(View):
     def post(self, request):
