@@ -103,5 +103,3 @@ def add_spending(request):
         }
         return JsonResponse(new_spending);
 
-def show_history(request):
-    return render(request, 'history.html')

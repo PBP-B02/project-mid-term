@@ -15,5 +15,4 @@ urlpatterns = [
     path('json/income/<int:id>', show_json_income_by_id, name='show_json_income_by_id'),
     path('json/spending/', show_json_spending, name='show_json_spending'),
     path('json/spending/<int:id>', show_json_spending_by_id, name='show_json_spending_by_id'),
-    path('history/', show_history, name='show_history'),
 ]

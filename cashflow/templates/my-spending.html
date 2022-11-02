@@ -55,7 +55,6 @@
       
     <script type="text/javascript" language="javascript">
     $(document).ready(function(){
-        let number = 0;
         $.get("/cashflow/json/spending", function(spendings) {
             console.log(spendings);
             const rupiah = new Intl.NumberFormat("id-ID", {
@@ -64,9 +63,7 @@
                 maximumFractionDigits:0,
             });
             for (i = 0; i < spendings.length; i++){
-                number++;
                 $(".spending").append(`<tr id="${spendings[i].pk}">
-                            <th scope="row">${number}</th>
                             <td>${spendings[i].fields.date}</td>
                             <td>${spendings[i].fields.name}</td>
                             <td>${spendings[i].fields.spending_type}</td>
@@ -95,9 +92,7 @@
                     });
 
                     useSuccess();
-                    number++;
                     $(".spending").append(`<tr id="${new_spending.pk}">
-                                    <th scope="row">${number}</th>
                                     <td>${new_spending.fields.date}</td>
                                     <td>${new_spending.fields.name}</td>
                                     <td>${new_spending.fields.spending_type}</td>
@@ -147,7 +142,7 @@
       $('#salaryModal').on('hidden.bs.modal', function (e) {
             $('#form-adder').find("input[type=text], textarea").val("");
             $('#form-adder').find("input[type=number], textarea").val("");
-      }
+      })
         function useAlert() {
             const toast = new bootstrap.Toast($('#toastAlert')[0])
             toast.show()
@@ -174,12 +169,11 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                            <th scope="col">No</th>
                             <th scope="col">Date</th>
                             <th scope="col">Name</th>
                             <th scope="col">Type</th>
                             <th scope="col">Amount</th>
-                            <th scope="col">Delete</th>
+                            <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody class="spending">
