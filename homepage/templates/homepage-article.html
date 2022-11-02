@@ -25,16 +25,10 @@
         <div class="left">
             <img src="image/Compfest Logo 1.jfif" alt="">
             <div class="search-bar">
-                {% comment %} <form method ="post" id = "search">
-                     {% csrf_token %}
-                    {{articles.form}}
-                    <input class="submit"type="submit">
-                </form> {% endcomment %}
-           
+              
                 <form action="" method="get" id="myFForm">
                     {% csrf_token %}
                     {{ search_form }}
-                    {% comment %} <input type="submit" value="Submit"> {% endcomment %}
                     <button onclick="getArticle()">Submit</button>
                 </form>
             </div>
@@ -42,93 +36,50 @@
 
 
         <div class="right">
-            <button href="{% url 'article:show_artikel' %}"><img src="{% static 'images/cashflow-kel.png' %}" alt=""></button>
+            <button href="{% url 'article:show_artikel' %}"><img src="{% static 'images/article-kel.png' %}" alt=""></button>
             <button><img src="{% static 'images/logout-kel.png' %}" alt=""></button>
         </div>
     </div>
 
-    {% comment %} test {% endcomment %}
-    {% comment %} <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for listing in listing_filter.qs %}
-        <div class="col">
-            {% include "components/listing_card.html" %}
-        </div>
-        {% endfor %}
-    </div>
- {% endcomment %}
 
-    {% comment %} test {% endcomment %}
-
-     {% for article in articles %}
-     <div class="artikel">
-         <div class="page" href="/article/json/'+item.pk+'">
-             <h4>{{ listing.judul }}</h4>
-             <p class="author">Author : Lorem ipsum dolor</p>
-             <p class="date"></p>
-             <button>Read</button>
-            </div>
-        </div>
-     {% endfor %} 
     <div id="artikel-title">
         <h3 id = "artikel-title-h3">Artikel Terupdate</h3>
     </div>
 
+    <div class="artikel">
+         {% for article in articles %}
+         <div class="page" href="{% url 'article:get-artikel-json' %}">
+             <h4>{{ article.judul }}</h4>
+             <p class="author">Rilis : {{article.tanggal}}</p>
+             <p class="date"></p>
+             <button><a href='/artikel/artikel/{{article.pk}}'>Read</a></button>
+        </div>
+    
+  
+        {% endfor %} 
+    
+
     <div class="content" id = "content-article">
-       
-        <div class="artikel">
-            <div class="page"href="/article/json/'+item.pk+'">
-                <h4>'+ item.fields.judul +'</h4>
-                <p class="author">Author : Lorem ipsum dolor</p>
+     
         
-                <button href="{% url 'article:show_artikel' %}" >Read</button>
-            </div>
-        </div> 
     </div>
 
-    <div class="comment-page">
-        <h2>Komentar</h2>
-        <form method ="POST" id = "comment-user">
-            {% csrf_token %}
-        <div class="add-comment">
-            {{ form.as_div }}
-              
-                <div>
-                    <input type="submit" id="tambah-komentar">
-                </div>
-            </div>
-        </form>
-        <div class="display-comment">
-
-            {% for item in comment_item %}
-            <div class="comment-user">
-                <div>
-                    <img src="image/Compfest Logo 1.jfif" alt="">
-                </div>
-                <div>
-                    <h4>{{item.user}}</h4>
-                    <p>{{item.comment_anonymous }}</p>
-                </div>
-            </div>
-
-            {% endfor %}
-        </div>
-        
+     
     </div>
 
     <script>
          function createCard(item) {
             const area = document.getElementById("content-article");
-            area.insertAdjacentHTML('beforeend', ' <div class="artikel"><div class="page" href="/article/json/'+item.pk+'"><h4>'+ item.fields.judul +'</h4><p class="author">Author : Lorem ipsum dolor</p><p class="date"></p><button>Read</button></div></div>');
+            area.insertAdjacentHTML('beforeend', ' <div class="artikel"><div class="page" href="/article/json/'+item.pk+'"><h4>'+ item.fields.judul +'</h4><p class="author">Tanggal : '+ item.fields.tanggal +' </p><p class="date"></p><button>Read</button></div></div>');
           }
 
         function getArticle(){
-            alert("TESTTT")
             const form = e.target;
             $.ajax({
                 url : "{% url 'article:get-artikel-json' %}",
                 type : "GET",
                 dataType : "json",
-                data: new FormData(form)
+                data: new FormData(form),
                 success: (items) =>{
                     console.log(items)
                     const area = document.getElementById("content-article")
@@ -151,11 +102,26 @@
 
         }
 
+        function addBookmark(id) {
+            console.log("hiiii");
+            $.ajax({
+                url: `/landingpage/bookmark/${id}`,
+                type: 'POST',
+                success: function(response) {
+                    console.log(response)
+                }
+            })
+        }
+
+        
+
+
         function myAjax() {alert("TEST")}
         
         $(document).ready(() => {
             getArticle();
             //$('#myFForm').submit(getArticle)
+            $('#')
         })
     </script>
     

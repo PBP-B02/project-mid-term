@@ -8,4 +8,5 @@ class Artikel(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     konten = models.TextField()
     
+    
 

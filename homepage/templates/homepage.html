@@ -24,12 +24,7 @@
     <div class="header">
         <img src="image/Compfest Logo 1.jfif" alt="" class="logo">
 
-        <nav>
-            <ul>
-                <li><a href="Select-Role">Select Role</a></li>
-                <li><a href="Artikel">Artikel</a></li>
-            </ul>
-        </nav>
+        
 
         <img src="image/hamburger-menu.svg" alt="" class="humberger-menu" id="humberger">
     </div>
@@ -38,14 +33,12 @@
 
         <div class="frame">
 
-            <input type="radio" name="radio-btn" id="radio1">
-            <input type="radio" name="radio-btn" id="radio2">
-
+          
             <div class="content-cashflow">
                 
                 <div class="right-content">
-                    <img src="image/business _ graph, chart, analytics, statistics, presentation, project, woman, people.svg" alt="">
-                    
+                    {% comment %} <img src="image/business _ graph, chart, analytics, statistics, presentation, project, woman, people.svg" alt=""> {% endcomment %}
+                    <img src="{% static 'images/image1.svg' %}" alt="">
                 </div>
                 
                 <div class="left-content">
@@ -62,8 +55,8 @@
             <div class="content-article-writer">
 
                 <div class="right-content">
-                    <img src="image/media, web development _ website, webpage, browser, image, layout, picture, photo, woman, people.svg" alt="">
-                    
+                    {% comment %} <img src="image/media, web development _ website, webpage, browser, image, layout, picture, photo, woman, people.svg" alt=""> {% endcomment %}
+                    <img src="{% static 'images/image2.svg' %}" alt="">
                 </div>
               
                 <div class="left-content">

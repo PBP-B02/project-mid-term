@@ -25,11 +25,11 @@
         <div class="left">
             <img src="image/Compfest Logo 1.jfif" alt="">
             <div class="search-bar">
-                <form method ="get" id = "search">
+              
+                <form action="" method="get" id="myFForm">
                     {% csrf_token %}
-                    {{listing_filter.form}}
-                    {% comment %} <input class="search" type="search" placeholder="Search..."> {% endcomment %}
-                    <input class="submit"type="submit">
+                    {{ search_form }}
+                    <button onclick="getArticle()">Submit</button>
                 </form>
             </div>
         </div>
@@ -42,73 +42,55 @@
     </div>
 
 
-    <div id="artikel">
-        <h3>Artikel Terupdate</h3>
+    <div id="artikel-title">
+        <h3 id = "artikel-title-h3">Artikel Terupdate</h3>
     </div>
+
+    <div class="artikel">
+         {% for article in articles %}
+         <div class="page" href="{% url 'article:get-artikel-json' %}">
+             <h4>{{ article.judul }}</h4>
+             <p class="author">Rilis : {{article.tanggal}}</p>
+             <p class="date"></p>
+             <button><a href='/artikel/artikel/{{article.pk}}'>Read</a></button>
+        </div>
+    
+  
+        {% endfor %} 
+    
 
     <div class="content" id = "content-article">
-       
-        <div class="artikel">
-            <div class="page"href="/article/json/'+item.pk+'">
-                <h4>'+ item.fields.judul +'</h4>
-                <p class="author">Author : Lorem ipsum dolor</p>
+     
         
-                <button href="{% url 'article:show_artikel' %}" >Read</button>
-            </div>
-        </div> 
     </div>
 
-    <div class="comment-page">
-        <h2>Komentar</h2>
-        <form method ="POST" id = "comment-user">
-            {% csrf_token %}
-        <div class="add-comment">
-            {{ form.as_div }}
-              
-                <div>
-                    <input type="submit" id="tambah-komentar">
-                </div>
-            </div>
-        </form>
-        <div class="display-comment">
-
-            {% for item in comment_item %}
-            <div class="comment-user">
-                <div>
-                    <img src="image/Compfest Logo 1.jfif" alt="">
-                </div>
-                <div>
-                    <h4>{{item.user}}</h4>
-                    <p>{{item.comment_anonymous }}</p>
-                </div>
-            </div>
-
-            {% endfor %}
-        </div>
-        
+     
     </div>
 
     <script>
          function createCard(item) {
             const area = document.getElementById("content-article");
-            area.insertAdjacentHTML('beforeend', ' <div class="artikel"><div class="page" href="/article/json/'+item.pk+'"><h4>'+ item.fields.judul +'</h4><p class="author">Author : Lorem ipsum dolor</p><p class="date"></p><button>Read</button></div></div>');
+            area.insertAdjacentHTML('beforeend', ' <div class="artikel"><div class="page" href="/article/json/'+item.pk+'"><h4>'+ item.fields.judul +'</h4><p class="author">Tanggal : '+ item.fields.tanggal +' </p><p class="date"></p><button>Read</button></div></div>');
           }
 
         function getArticle(){
+            const form = e.target;
             $.ajax({
                 url : "{% url 'article:get-artikel-json' %}",
                 type : "GET",
                 dataType : "json",
+                data: new FormData(form),
                 success: (items) =>{
                     console.log(items)
                     const area = document.getElementById("content-article")
+                    
                     if(items.length == 0){
-                    area.insertAdjacentHTML('afterbegin',"<div class='ohno' id='nodiary'><h1 style='text-align: center; margin-top: 30px;'>Ouch, {{username}}!</h1><h4 style='color: #6C757D; text-align: center;'> You don't have any diary! &#128533;</h4><div class='text-center mt-4'><button type='button' class='btn btn-primary add-task' data-bs-toggle='modal' data-bs-target='#add-diary-modal' style='border: none; background-color: #2F6D80;'> Add new diary </button></div></div>")
+                    $("#artikel-title-h3").remove();
+                    area.insertAdjacentHTML('afterbegin',"<div class='ohno' id='nodiary'><h1 style='text-align: center; margin-top: 30px;'>Ouch, {{username}}!</h1><h4 style='color: #6C757D; text-align: center;'> Anda belum mempunyai artikel &#128533;</h4><div class='text-center mt-4'><button type='button' class='btn btn-primary add-task' data-bs-toggle='modal' data-bs-target='#add-diary-modal' style='border: none; background-color: #2F6D80;'> Buat Artikel </button></div></div>")
                     }
                     else {
                         $("#nodiary").remove();
-                        $("#ar").remove()
-                        {% comment %} area.insertAdjacentHTML('afterbegin', "<div id='ar'><div class='text-center' id='heading'><h1 class='fw-bolder fs-25 mb-25' id='heading'>My Diary</h1><h5 style='color: #2F6D80;'>My beautiful stories</h5></div><div id='diary-area'></div><div class='text-center'><button type='button' class='btn btn-primary add-task' data-bs-toggle='modal' data-bs-target='#add-diary-modal' style='margin-top: 20px; border: none; background-color: #2F6D80;'> Add new diary </button></div></div>") {% endcomment %}
+                        $("#ar").remove();
                         items.map(item => createCard(item));
                         console.log(items);
                         console.log("berhasil");
@@ -117,10 +99,29 @@
                 
                 
             })
+
         }
+
+        function addBookmark(id) {
+          
+            $.ajax({
+                url: `/landingpage/bookmark/${id}`,
+                type: 'POST',
+                success: function(response) {
+                    console.log(response)
+                }
+            })
+        }
+
+        
+
+
+        function myAjax() {alert("TEST")}
         
         $(document).ready(() => {
             getArticle();
+            //$('#myFForm').submit(getArticle)
+            $('#')
         })
     </script>
     

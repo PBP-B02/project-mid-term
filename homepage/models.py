@@ -1,3 +1,4 @@
+from turtle import title
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -5,11 +6,9 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-
-class Search(models.Model):
+class Bookmark(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    article_name = models.CharField(max_length=155)
+    title = models.CharField(max_length=200)
+ 
 
-class Comment(models.Model):
-    comment = models.CharField(max_length=155)
-    
+
