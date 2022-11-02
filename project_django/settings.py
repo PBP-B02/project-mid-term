@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'example_app',
     'main',
     'account',
+    'cashflow',
+    'history',
     'article',
+    'homepage',
 ]
 
 MIDDLEWARE = [

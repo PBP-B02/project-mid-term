@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Bookmark</title>
+</head>
+<body>
+    <div class="container">
+
+        <div class="artikel">
+            <div class="page"href="/article/json/'+item.pk+'">
+                <h4>'+ item.fields.judul +'</h4>
+                <p class="author">Author : Lorem ipsum dolor</p>
+        
+                <button href="{% url 'article:show_artikel' %}" >Read</button>
+            </div>
+        </div> 
+    </div>
+
+    <script>
+        function createCard(item) {
+           const area = document.getElementById("container");
+           area.insertAdjacentHTML('beforeend', ' <div class="artikel"><div class="page" href="/article/json/'+item.pk+'"><h4>'+ item.fields.judul +'</h4><p class="author">Author :'+item.fields.author+'r</p><p class="date"></p><button>Read</button></div></div>');
+         }
+
+       function getArticle(){
+           
+           const form = e.target;
+           $.ajax({
+               url : "{% url 'landingpage:show_json' %}",
+               type : "GET",
+               dataType : "json",
+               data: new FormData(form)
+               success: (items) =>{
+                   console.log(items)
+                   const area = document.getElementById("container")
+                   
+                   if(items.length == 0){
+                   $("#artikel-title-h3").remove();
+                   area.insertAdjacentHTML('afterbegin',"<div class='ohno' id='nodiary'><h1 style='text-align: center; margin-top: 30px;'>Ouch</h1><h4 style='color: #6C757D; text-align: center;'> Anda belum mempunyai artikel &#128533;</h4><div class='text-center mt-4'><button type='button' class='btn btn-primary add-task' data-bs-toggle='modal' data-bs-target='#add-diary-modal' style='border: none; background-color: #2F6D80;'> Buat Artikel </button></div></div>")
+                   }
+                   else {
+                       $("#nodiary").remove();
+                       $("#ar").remove();
+                       items.map(item => createCard(item));
+                       console.log(items);
+                       console.log("berhasil");
+                     }
+               }
+               
+           })
+
+       }
+
+       addBookmark = (id) => {
+           $.ajax({
+               url: `/homepage/bookmark/${id}`,
+               type: 'POST',
+               success: function(response) {
+                   console.log(response)
+               }
+           })
+       }
+
+  
+       $(document).ready(() => {
+           getArticle();
+       })
+   </script>
+</body>
+
+</html>

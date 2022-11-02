@@ -1,0 +1,17 @@
+body {
+  background-color: whitesmoke;
+  font-family: 'Helvetica';
+}
+h1 {
+  font-weight: 700;
+  /* identical to box height */
+
+  text-align: center;
+
+  color: #28362f;
+}
+h5 {
+  color: #28362f;
+  text-align: center;
+}
+
