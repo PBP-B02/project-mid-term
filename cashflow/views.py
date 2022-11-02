@@ -1,3 +1,4 @@
+
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core import serializers
 from django.shortcuts import render, redirect
@@ -66,6 +67,8 @@ def add_income(request):
         amount = request.POST.get('amount')
         date = request.POST.get('date')
         income_type = request.POST.get('income_type')
+        if name == "" or amount == "" or date == "":
+            return JsonResponse({'error':True})
         new_income = Income.objects.create(name = name, amount = amount, date = date, user=request.user, income_type=income_type)
         new_income = {
             'pk' : new_income.pk,
@@ -84,8 +87,11 @@ def add_spending(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         amount = request.POST.get('amount')
+        date = request.POST.get('date')
         spending_type = request.POST.get('spending_type')
-        new_spending = Spending.objects.create(name = name, amount = amount, date = datetime.date.today(), user=request.user, spending_type=spending_type)
+        if name == "" or amount == "" or date == "":
+            return JsonResponse({'error':True})
+        new_spending = Spending.objects.create(name = name, amount = amount, date = date, user=request.user, spending_type=spending_type)
         new_spending = {
             'pk' : new_spending.pk,
             'fields':{
@@ -97,3 +103,5 @@ def add_spending(request):
         }
         return JsonResponse(new_spending);
 
+def show_history(request):
+    return render(request, 'history.html')

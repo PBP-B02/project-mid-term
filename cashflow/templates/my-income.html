@@ -54,6 +54,7 @@
       
     <script type="text/javascript" language="javascript">
     $(document).ready(function(){
+        let number = 0;
         $.get("/cashflow/json/income", function(incomes) {
             console.log(incomes);
             const rupiah = new Intl.NumberFormat("id-ID", {
@@ -62,8 +63,9 @@
                 maximumFractionDigits:0,
             });
             for (i = 0; i < incomes.length; i++){
-                $(".income").append(`<tr id="${incomes[i].pk}_income">
-                            <th scope="row">${i+1}</th>
+                number++;
+                $(".income").append(`<tr id="${incomes[i].pk}">
+                            <th scope="row">${number}</th>
                             <td>${incomes[i].fields.date}</td>
                             <td>${incomes[i].fields.name}</td>
                             <td>${incomes[i].fields.income_type}</td>
@@ -81,21 +83,30 @@
             date: $('#date').val(),
             income_type: $("#income_type").val()},
             function(new_income) {
-            console.log(new_income);
-            const rupiah = new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                maximumFractionDigits:0,
-            });
-            $(".income").append(`<tr id="${new_income.pk}_income">
-                            <th scope="row">${i+1}</th>
-                            <td>${new_income.fields.date}</td>
-                            <td>${new_income.fields.name}</td>
-                            <td>${new_income.fields.income_type}</td>
-                            <td>${rupiah.format(new_income.fields.amount)}</td>
-                            <td><button class="btn btn-danger" onclick = "deleteIncome(${new_income.pk})">X</button></td>
-                            </tr>`) 
-        }
+                if (new_income.hasOwnProperty('error')){
+                    useAlert();
+                } else{
+                    console.log(new_income);
+                    const rupiah = new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                        maximumFractionDigits:0,
+                    });
+            
+                    useSuccess();
+                    number++;
+                    $(".income").append(`<tr id="${new_income.pk}">
+                                    <th scope="row">${number}</th>
+                                    <td>${new_income.fields.date}</td>
+                                    <td>${new_income.fields.name}</td>
+                                    <td>${new_income.fields.income_type}</td>
+                                    <td>${rupiah.format(new_income.fields.amount)}</td>
+                                    <td><button class="btn btn-danger" onclick = "deleteIncome(${new_income.pk})">X</button></td>
+                                    </tr>`)
+                    $(`#salaryModal`).modal('hide');
+
+                }
+            }
             )
           })
 
@@ -114,12 +125,22 @@
             $('#salaryModal').modal('show');
         });
 
+        function useAlert() {
+            const toast = new bootstrap.Toast($('#toastAlert')[0])
+            toast.show()
+        }
+
+        function useSuccess() {
+            const toast = new bootstrap.Toast($('#toastSuccess')[0])
+            toast.show()
+            }
+
         deleteIncome = (id) => {
         $.ajax({
           url: `/cashflow/delete-income/${id}`,
           type: 'DELETE',
           success: function(response){
-            $(`#${id}_income`).remove()
+            $(`#${id}`).remove()
           }
         })
       }
@@ -183,6 +204,34 @@
 
         </div>
     </div>
+    
+    <!-- Toast -->
+    <div aria-live="polite" aria-atomic="true" class="bg-dark position-relative bd-example-toasts">
+    <div class="toast-container position-absolute p-3 bottom-0 end-0">
+        <div id = "toastSuccess" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+            <div class="toast-body">
+                Successfully created!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <!-- Toast -->
+    <div aria-live="polite" aria-atomic="true" class="bg-dark position-relative bd-example-toasts">
+    <div class="toast-container position-absolute p-3 bottom-0 end-0">
+        <div id = "toastAlert" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+            <div class="toast-body">
+                Failed! Please fill the right input.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    </div>
 
     <!-- Modal -->
   <div class="modal fade" id="salaryModal" tabindex="-1" aria-labelledby="salaryModalLabel" aria-hidden="true">
@@ -190,6 +239,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="salaryModalLabel">Add New Income</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <form id="form-adder" method="POST" action="">
@@ -206,7 +256,7 @@
                     </tr>
                     <tr>
                         <td>Date: </td>
-                        <td><input type="date" name="date" value="2022-01-01" placeholder="Amount.." required class="form-control" id="date"></td>
+                        <td><input type="date" name="date" placeholder="Amount.." required class="form-control" id="date"></td>
                     </tr>
                     <tr>
                         <td>Type: </td>
@@ -219,7 +269,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" id="submit" data-bs-dismiss="modal" class="btn btn-success">Add</button>
+          <button type="submit" id="submit"  class="btn btn-success">Add</button>
         </div>
       </div>
     </div>
