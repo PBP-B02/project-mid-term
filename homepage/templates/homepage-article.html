@@ -1,0 +1,166 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel</title>
+
+     <!-- font type ubuntu connect -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    
+     <!-- css connect -->
+    <link rel="stylesheet" href="homepage-artikel.css">
+    <link rel="stylesheet" href="{% static 'css/homepage-artikel.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body>
+    <div class="header">
+
+        <div class="left">
+            <img src="image/Compfest Logo 1.jfif" alt="">
+            <div class="search-bar">
+                {% comment %} <form method ="post" id = "search">
+                     {% csrf_token %}
+                    {{articles.form}}
+                    <input class="submit"type="submit">
+                </form> {% endcomment %}
+           
+                <form action="" method="get" id="myFForm">
+                    {% csrf_token %}
+                    {{ search_form }}
+                    {% comment %} <input type="submit" value="Submit"> {% endcomment %}
+                    <button onclick="getArticle()">Submit</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="right">
+            <button href="{% url 'article:show_artikel' %}"><img src="{% static 'images/cashflow-kel.png' %}" alt=""></button>
+            <button><img src="{% static 'images/logout-kel.png' %}" alt=""></button>
+        </div>
+    </div>
+
+    {% comment %} test {% endcomment %}
+    {% comment %} <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for listing in listing_filter.qs %}
+        <div class="col">
+            {% include "components/listing_card.html" %}
+        </div>
+        {% endfor %}
+    </div>
+ {% endcomment %}
+
+    {% comment %} test {% endcomment %}
+
+     {% for article in articles %}
+     <div class="artikel">
+         <div class="page" href="/article/json/'+item.pk+'">
+             <h4>{{ listing.judul }}</h4>
+             <p class="author">Author : Lorem ipsum dolor</p>
+             <p class="date"></p>
+             <button>Read</button>
+            </div>
+        </div>
+     {% endfor %} 
+    <div id="artikel-title">
+        <h3 id = "artikel-title-h3">Artikel Terupdate</h3>
+    </div>
+
+    <div class="content" id = "content-article">
+       
+        <div class="artikel">
+            <div class="page"href="/article/json/'+item.pk+'">
+                <h4>'+ item.fields.judul +'</h4>
+                <p class="author">Author : Lorem ipsum dolor</p>
+        
+                <button href="{% url 'article:show_artikel' %}" >Read</button>
+            </div>
+        </div> 
+    </div>
+
+    <div class="comment-page">
+        <h2>Komentar</h2>
+        <form method ="POST" id = "comment-user">
+            {% csrf_token %}
+        <div class="add-comment">
+            {{ form.as_div }}
+              
+                <div>
+                    <input type="submit" id="tambah-komentar">
+                </div>
+            </div>
+        </form>
+        <div class="display-comment">
+
+            {% for item in comment_item %}
+            <div class="comment-user">
+                <div>
+                    <img src="image/Compfest Logo 1.jfif" alt="">
+                </div>
+                <div>
+                    <h4>{{item.user}}</h4>
+                    <p>{{item.comment_anonymous }}</p>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+        
+    </div>
+
+    <script>
+         function createCard(item) {
+            const area = document.getElementById("content-article");
+            area.insertAdjacentHTML('beforeend', ' <div class="artikel"><div class="page" href="/article/json/'+item.pk+'"><h4>'+ item.fields.judul +'</h4><p class="author">Author : Lorem ipsum dolor</p><p class="date"></p><button>Read</button></div></div>');
+          }
+
+        function getArticle(){
+            alert("TESTTT")
+            const form = e.target;
+            $.ajax({
+                url : "{% url 'article:get-artikel-json' %}",
+                type : "GET",
+                dataType : "json",
+                data: new FormData(form)
+                success: (items) =>{
+                    console.log(items)
+                    const area = document.getElementById("content-article")
+                    
+                    if(items.length == 0){
+                    $("#artikel-title-h3").remove();
+                    area.insertAdjacentHTML('afterbegin',"<div class='ohno' id='nodiary'><h1 style='text-align: center; margin-top: 30px;'>Ouch, {{username}}!</h1><h4 style='color: #6C757D; text-align: center;'> Anda belum mempunyai artikel &#128533;</h4><div class='text-center mt-4'><button type='button' class='btn btn-primary add-task' data-bs-toggle='modal' data-bs-target='#add-diary-modal' style='border: none; background-color: #2F6D80;'> Buat Artikel </button></div></div>")
+                    }
+                    else {
+                        $("#nodiary").remove();
+                        $("#ar").remove();
+                        items.map(item => createCard(item));
+                        console.log(items);
+                        console.log("berhasil");
+                      }
+                }
+                
+                
+            })
+
+        }
+
+        function myAjax() {alert("TEST")}
+        
+        $(document).ready(() => {
+            getArticle();
+            //$('#myFForm').submit(getArticle)
+        })
+    </script>
+    
+    
+    
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,92 @@
+ {% comment %} ajax       {% endcomment %}
+ <script type="text/javascript" language="javascript">
+    $(document).ready(function(){
+        $.get("/article/json/", function(incomes) {
+            console.log(incomes);
+            const rupiah = new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                maximumFractionDigits:0,
+            });
+            for (i = 0; i < incomes.length; i++){
+                $(".income").append(`<tr id="${incomes[i].pk}">
+                            <th scope="row">${i+1}</th>
+                            <td>${incomes[i].fields.date}</td>
+                            <td>${incomes[i].fields.name}</td>
+                            <td>${incomes[i].fields.income_type}</td>
+                            <td>${rupiah.format(incomes[i].fields.amount)}</td>
+                            <td><button class="btn btn-danger" onclick = "deleteIncome(${incomes[i].pk})">X</button></td>
+                            </tr>`)
+                
+            }
+        });
+        $("#submit").click(function(){
+          $.post("/cashflow/add-income/", {
+
+            name : $('#name').val(),
+            amount: $('#amount').val(),
+            date: $('#date').val(),
+            income_type: $("#income_type").val()},
+            function(new_income) {
+            console.log(new_income);
+            const rupiah = new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                maximumFractionDigits:0,
+            });
+            $(".income").append(`<tr id="${new_income.pk}">
+                            <th scope="row">${new_income.pk}</th>
+                            <td>${new_income.fields.date}</td>
+                            <td>${new_income.fields.name}</td>
+                            <td>${new_income.fields.income_type}</td>
+                            <td>${rupiah.format(new_income.fields.amount)}</td>
+                            <td><button class="btn btn-danger" onclick = "deleteIncome(${new_income.pk})">X</button></td>
+                            </tr>`) 
+        }
+            )
+          })
+
+        $("#salaryButton").click(function(){
+            $("#income_type").val("Salary"); 
+            $('#salaryModal').modal('show');
+        });
+        
+        $("#passiveButton").click(function(){
+            $("#income_type").val("Passive"); 
+            $('#salaryModal').modal('show');
+        });
+
+        $("#othersButton").click(function(){
+            $("#income_type").val("Others"); 
+            $('#salaryModal').modal('show');
+        });
+
+        deleteIncome = (id) => {
+        $.ajax({
+          url: `/cashflow/delete-income/${id}`,
+          type: 'DELETE',
+          success: function(response){
+            $(`#${id}`).remove()
+            window.location.reload()
+          }
+        })
+      }
+      $('#salaryModal').on('hidden.bs.modal', function (e) {
+            $('#form-adder').find("input[type=text], textarea").val("");
+            $('#form-adder').find("input[type=number], textarea").val("");
+      })
+        // function deleteIncome(id){
+        //     $.ajax({
+        //         url: "/cashflow/json/income/"+id,
+        //         method: 'DELETE',
+        //         success: function(){
+        //             alert('success')
+        //         },
+        //         error: function(error){
+        //             alert(error)
+        //         }
+                
+        //     })
+        // }
+    }); 
+    </script>

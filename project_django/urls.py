@@ -25,4 +25,6 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('auth/', include('account.urls')),
     path('artikel/',include('article.urls')),
+    path('landingpage/', include('homepage.urls')),
+    path('comment/', include('comment.urls')),
 ]
