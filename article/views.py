@@ -27,7 +27,6 @@ def show_artikel(request):
     context = {
         'form':form,
         'user':request.user,
-        'last_login': request.COOKIES.get('last_login'),
     }
     
     if(request.user.profile.role == "writer"):
@@ -62,7 +61,7 @@ def get_artikel_json(request):
 
 def get_artikel_json_by_id(request, id):
     artikel = Artikel.objects.get(pk=id)
-    return HttpResponse(serializers.serialize('json', [artikel]), content_type='application/json')
+    return HttpResponse(serializers.serialize("json", [artikel]), content_type="application/json")
 
 def get_artikel_by_id(request, id):
     artikel = Artikel.objects.get(pk=id)

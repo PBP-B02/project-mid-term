@@ -30,10 +30,12 @@
         <div id="${data.pk}-card" class="card mb-3 m-5">      
           <div class="card-body p-3" style="background-color:#edfaef" >
             <h5 class="card-title">${data.fields.judul}</h5>
-            <p class="card-text">${data.fields.konten}</p>
+            <p class="card-text">${(data.fields.konten).substring(0,200)}</p>
           </div>
+
           <div class="card-footer" style="background-color: #5DB075 ">
             <a id="${data.pk}-delete" class="btn btn btn-danger text-center m-2" ">Delete Artikel</a>
+            <a href="/artikel/artikel/${data.pk}" class="btn btn btn-primary text-center m-2" >Read more</a>
           </div>
         </div>         
         `
@@ -74,45 +76,29 @@
     box-shadow: 4px 4px 2px rgb(108, 120, 130);
     transform: scale(1.05);
   }
+
+  .button:hover{
+    box-shadow: 4px 4px 2px rgb(108, 120, 130);
+    transform: scale(1.05);
+  }
 </style>
 {% endblock meta %}
 {% block content %}
 
 <!-- modal -->
 <body>
+  <div>
+    <center>
+      <img src="https://img.freepik.com/free-vector/cashback-saving-money-concept-flat-illustration-set-buyer-characters-pay-online-cash-refund-purchase-credit-card-wallet-financial-savings-coins-loyalty-rewards-program_88138-830.jpg?w=1380&t=st=1667308330~exp=1667308930~hmac=4ef398c53caaf131cfb4722c772a815cd45e3548b9f2aa25cbd4d26a43c01b6b" alt="pict1">
+    </center>
+  </div>
   <h2 class="text-center m-4 font-monospace fw-bold" style="font-weight: bold; font-size: larger;" > The price of anything is the amount of life you exchange for it.  </h2>
   <h6 class="text-center m-2">– Henry David Thoreau</h6>
   <p class="text-center m-5 font-monospace fst-italic" >A 19th century American philosopher, poet and academic, Thoreau wore many hats. An advocate of living simply, this quote speaks to his suspicion of focusing too much on worldly possessions. His words still ring true today. Spending a lot of mental energy on worrying about what you (or others) have or don’t have is exhausting. Instead, focus on what matters most to you whether that’s family, friends or your future.</p>
-  <button id="add-btn" class="add-artikel btn btn-success m-5"> Tambah Artikel </button>
-  <!-- <div class="modal" style="background-color:#edfaef">
-    <div class ="card mb-3 m-5" style="background-color: #8e9681">
-      <div>
-        <h5 class="card-title text-center">Detail Artikel</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form id = "artikelbaru" >      
-        {% csrf_token %} -->
-        <!-- Message input -->
-        <!-- <div class="form-outline mb-4">
-          <label for="judul" class = "fw-bold mb-2" >Judul</label>
-          {{ form.judul }}
-        </div>
-        <div class="form-outline mb-4"> 
-          <label for="konten" class="fw-bold mb-2">Konten</label>
-          {{ form.konten }}
-        </div> -->
-      
-          <!-- Submit button -->
-          <!-- <input type="submit" value="submit" > -->
-        
-      <!-- </form>
-    </div>
-  </div> -->
-  <!-- Button trigger modal -->
-
-
-<!-- Modal -->
-
+  <center>
+    <button id="add-btn" class="add-artikel btn btn-success m-5 "> Tambah Artikel </button>
+  </center>
+  
 <div class="modal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -142,6 +128,11 @@
 
 
     <div id="content" class="content"></div>
+    <div>
+      <center>
+        <img src="https://img.freepik.com/free-vector/happy-rich-banker-celebrating-income-growth_74855-5867.jpg?w=900&t=st=1667319801~exp=1667320401~hmac=bf8ea36bba98e0e622a0a616be4a08886853d543105640354d9124af7f9b42d6" alt="pict2" class="center">
+      </center>
+    </div>
       
       
       <script src="{% static 'scripts/jquery.min.js' %}"></script>
