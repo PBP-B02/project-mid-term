@@ -14,7 +14,7 @@ def register(response):
     
     if response.user.is_authenticated:
         messages.warning(response, 'You have to logout your account first!')
-        return redirect("/")
+        return redirect("/landingpage")
     else:
         if response.method == "POST":
             form = SignupForm(response.POST)
@@ -23,13 +23,17 @@ def register(response):
                 username = form.cleaned_data.get('username')
                 selected = form.cleaned_data.get('role_choice')
                 email = form.cleaned_data.get('email')
-             
-                login(response, user)
-                update_profile(username, selected, email)
-                messages.success(response, f'Welcome to CATFISH, { user.username }')
-                
-                return redirect("/homepage-article/")
-                
+
+                if selected == 'regular':
+                    login(response, user)
+                    update_profile(username, selected, email)
+                    messages.success(response, f'Welcome to CATFISH, { user.username }')
+                    return redirect("/landingpage/homepage-cashflow")
+                elif selected == 'writer':
+                    login(response, user)
+                    update_profile(username, selected, email)
+                    messages.success(response, f'Welcome to CATFISH, { user.username }')
+                    return redirect("/landingpage/homepage-article")
 
         else:
             form = SignupForm()
@@ -46,14 +50,18 @@ def login_view(request):
 
     if request.user.is_authenticated:
         messages.warning(request, 'You have to logout your account first!')
-        return redirect("/")
+        return redirect("/landingpage")
     else:
         if request.method == "POST":
             form = LoginForm(data=request.POST)
             if form.is_valid():
                 user = form.get_user()
-                login(request, user)
-                return redirect("/")
+                if user.profile.role == 'regular':
+                    login(request, user)
+                    return redirect("/landingpage/homepage-cashflow")
+                if user.profile.role == 'writer':
+                    login(request, user)
+                    return redirect("/landingpage/homepage-article")
         else:
             form = LoginForm()
 
@@ -69,7 +77,7 @@ class ValidateLoginUsername(View):
 
 def logout_view(response):
     logout(response)
-    return redirect("/")
+    return redirect("/landingpage")
 
 class ValidateUsername(View):
     def post(self, request):
