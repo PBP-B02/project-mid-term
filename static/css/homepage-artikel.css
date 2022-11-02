@@ -84,7 +84,6 @@ input[type="search"]::content {
 
 }
 .artikel:hover{
-    background-image: url('image/catfish-background.png');
     background-repeat: repeat;
     transition: 2s;
     height: 100%;
