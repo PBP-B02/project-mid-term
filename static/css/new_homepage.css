@@ -1,0 +1,236 @@
+
+.content{
+    margin-top: 0px;
+}
+.content-welcome{
+    display: grid;
+    grid-template-columns: 400px 400px;
+    
+}
+.content-welcome-event,.content-welcome-sponsor{
+    padding: 0px 50px;
+    border: none;
+    /* background: #d2f1e15b; */
+    background: white;
+    border-radius: 10px;
+    margin: 20px;
+    height: 420px;
+    width: 350px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+   
+}
+.content-welcome-event{
+    background-color:whitesmoke;
+}
+.content-welcome-sponsor img{
+    width: 180px;
+    border-radius: 14px;
+    box-shadow: 0px 4px 20px 5px rgba(145,255,219,0.75);
+
+}
+.content-welcome-upper{
+    align-items: center;
+    padding: 0px;
+    
+    display: flex;
+    flex-direction: column;
+}
+.frame-slide{
+    height: 250px;
+    width: 250px;
+    overflow: hidden;
+    /* border: solid 1px black; */
+}
+.slides{
+    display: flex;
+    overflow: hidden;
+    height: 250px;
+    width: 500%;
+    transition: 1s;
+}
+.slides input{
+    display: none;
+}
+.slides div{
+    height: 350px;
+    width: 250px;
+    transition: 1s;
+}
+.content-welcome-thumbnail{
+    height: 180px;
+    vertical-align: 10;
+    box-sizing: border-box;
+    
+}
+/* manual slide navigation */
+.navigation-manual{
+    position: absolute;
+    width: 800px;
+    margin-top: -40px;
+    display: flex;
+    justify-content: center;
+}
+
+.manual-btn{
+    border: 2px solid green;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.8s;
+}
+.manual-btn:not(:last-child){
+    margin-right: 40px ;
+}
+.manual-btn:hover{
+    background: green;
+}
+        /* for event organizer */
+
+        #radio1:checked ~ .first{
+            margin-left: 0;
+        }
+        #radio2:checked ~ .first{
+            margin-left: -20%;
+        }
+        #radio3:checked ~ .first{
+            margin-left: -40%;
+        }
+        #radio4:checked ~ .first{
+            margin-left: -60%;
+        }
+
+        /* for sponsor */
+        #radios1:checked ~ .firsts{
+            margin-left: 0;
+        }
+        #radios2:checked ~ .firsts{
+            margin-left: -20%;
+        }
+        #radiow3:checked ~ .firsts{
+            margin-left: -40%;
+        }
+        #radios4:checked ~ .firsts{
+            margin-left: -60%;
+        }
+/* end manual slide navigation */
+
+button{
+    align-items: center;
+}
+h1{
+    font-size: 20px;
+    text-align: center;
+}
+h3{
+    font-size: 12px;
+    text-align: center;
+    font-weight: normal;
+    color: gray;
+    margin-top: 5px;
+    transition: 0.5s;
+}
+/* tombol login signin */
+
+.button-login{
+    border-radius: 5px;
+    height: 40px;
+    width: 65px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 10px;
+
+    background-color: white;
+    border:solid 1px #5DB075;
+    color: #24663a;
+}
+.button-signin{
+    border-radius: 5px;
+    height: 40px;
+    width: 65px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 10px;
+
+    background-color: #5DB075;
+    color: white;
+    border: none;
+}
+.button-login:hover{
+    background-color: #5DB075;
+    color: white;
+    border: none;
+    transition: 0.5s;
+}
+.button-signin:hover{
+    background-color: white;
+    color: #24663a;
+    border: solid 1px #5DB075 ;
+    transition: 0.5s;
+}
+
+
+/* css for auto navigation */
+.navigation-auto{
+    position: absolute;
+    display: flex;
+    width: 800px;
+    justify-content: center;
+    margin-top: 460px;
+}
+.navigation-auto div{
+    border: 2px solid lightskyblue;
+    padding: 5px;
+    border-radius: 10px;
+    transition: 1s;
+}
+
+    /* for event organizer */
+    .navigation-auto div:not(:last-child){
+        margin-right: 40px;
+    }
+    #radio1:checked ~.navigation-auto .auto-btn1{
+        background: lightskyblue;
+    }
+
+    #radio2:checked ~.navigation-auto .auto-btn2{
+        background: lightskyblue;
+    }
+
+    #radio3:checked ~.navigation-auto .auto-btn3{
+        background: lightskyblue;
+    }
+
+    #radio4:checked ~.navigation-auto .auto-btn4{
+        background: lightskyblue;
+    }
+
+    /* for sponsor */
+    #radios1:checked ~.navigation-auto .auto-btn5{
+        background: lightskyblue;
+    }
+
+    #radios2:checked ~.navigation-auto .auto-btn6{
+        background: lightskyblue;
+    }
+
+    #radios3:checked ~.navigation-auto .auto-btn7{
+        background: lightskyblue;
+    }
+
+    #radios4:checked ~.navigation-auto .auto-btn8{
+        background: lightskyblue;
+    }
+
+
+    @media screen and (max-width: 992px){
+        .content-welcome{
+            display: flex;
+            flex-direction: column;
+            
+        }
+    }
+

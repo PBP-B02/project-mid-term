@@ -1,0 +1,140 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel</title>
+
+     <!-- font type ubuntu connect -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    
+     <!-- css connect -->
+    <link rel="stylesheet" href="homepage-artikel.css">
+    <link rel="stylesheet" href="{% static 'css/homepage-artikel.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body>
+    <div class="header">
+
+        <div class="left">
+            <img src="image/Compfest Logo 1.jfif" alt="">
+            <div class="search-bar">
+              
+                <form action="" method="get" id="myFForm">
+                    {% csrf_token %}
+                    {{ search_form }}
+                    <button onclick="getArticle()">Submit</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="right">
+            <button href="/artikel/">
+                <a href='/artikel/'> 
+                    <img src="{% static 'images/article-kel.png' %}" alt="">
+                </a>
+            </button>
+            <button>
+          
+                    <img src="{% static 'images/logout-kel.png' %}" alt="">
+               
+               </button>
+        </div>
+    </div>
+
+
+    <div id="artikel-title">
+        <h3 id = "artikel-title-h3">Artikel Terupdate</h3>
+    </div>
+
+    <div class="artikel">
+         {% for article in articles %}
+         <div class="page" href="{% url 'article:get-artikel-json' %}">
+             <h4>{{ article.judul }}</h4>
+             <p class="author">Rilis : {{article.tanggal}}</p>
+             <p class="date"></p>
+             <button><a href='/artikel/artikel/{{article.pk}}'>Read</a></button>
+        </div>
+    
+  
+        {% endfor %} 
+    
+
+    <div class="content" id = "content-article">
+     
+        
+    </div>
+
+     
+    </div>
+
+    <script>
+         function createCard(item) {
+            const area = document.getElementById("content-article");
+            area.insertAdjacentHTML('beforeend', ' <div class="artikel"><div class="page" href="/article/json/'+item.pk+'"><h4>'+ item.fields.judul +'</h4><p class="author">Tanggal : '+ item.fields.tanggal +' </p><p class="date"></p><button>Read</button></div></div>');
+          }
+
+        function getArticle(){
+            const form = e.target;
+            $.ajax({
+                url : "{% url 'article:get-artikel-json' %}",
+                type : "GET",
+                dataType : "json",
+                data: new FormData(form),
+                success: (items) =>{
+                    console.log(items)
+                    const area = document.getElementById("content-article")
+                    
+                    if(items.length == 0){
+                    $("#artikel-title-h3").remove();
+                    area.insertAdjacentHTML('afterbegin',"<div class='ohno' id='nodiary'><h1 style='text-align: center; margin-top: 30px;'>Ouch, {{username}}!</h1><h4 style='color: #6C757D; text-align: center;'> Anda belum mempunyai artikel &#128533;</h4><div class='text-center mt-4'><button type='button' class='btn btn-primary add-task' data-bs-toggle='modal' data-bs-target='#add-diary-modal' style='border: none; background-color: #2F6D80;'> Buat Artikel </button></div></div>")
+                    }
+                    else {
+                        $("#nodiary").remove();
+                        $("#ar").remove();
+                        items.map(item => createCard(item));
+                        console.log(items);
+                        console.log("berhasil");
+                      }
+                }
+                
+                
+            })
+
+        }
+
+        function addBookmark(id) {
+            console.log("hiiii");
+            $.ajax({
+                url: `/landingpage/bookmark/${id}`,
+                type: 'POST',
+                success: function(response) {
+                    console.log(response)
+                }
+            })
+        }
+
+        
+
+
+        function myAjax() {alert("TEST")}
+        
+        $(document).ready(() => {
+            getArticle();
+            //$('#myFForm').submit(getArticle)
+            $('#')
+        })
+    </script>
+    
+    
+    
+</body>
+</html>
+{% endblock content %}

@@ -19,7 +19,7 @@ from account.views import register, login_view, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('example_app.urls')),
+    path('', include('homepage.urls')),
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),

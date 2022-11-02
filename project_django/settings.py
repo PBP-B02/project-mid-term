@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'cashflow',
     'history',
     'article',
+    'homepage',
 ]
 
 MIDDLEWARE = [

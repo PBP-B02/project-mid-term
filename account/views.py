@@ -23,11 +23,13 @@ def register(response):
                 username = form.cleaned_data.get('username')
                 selected = form.cleaned_data.get('role_choice')
                 email = form.cleaned_data.get('email')
-
+             
                 login(response, user)
                 update_profile(username, selected, email)
                 messages.success(response, f'Welcome to CATFISH, { user.username }')
-                return redirect("/")
+                
+                return redirect("/homepage-article/")
+                
 
         else:
             form = SignupForm()
