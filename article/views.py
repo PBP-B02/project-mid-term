@@ -26,21 +26,18 @@ def show_artikel(request):
     form = FormArtikel()
     context = {
         'form':form,
-        'user':request.user,
+
     }
-    
-    if(request.user.profile.role == "writer"):
-        return render(request,"article-write.html",context)
-    else:
-        return render(request,"article-reguler.html",context)
+    return render(request,"article-write.html",context)
+
 
 @csrf_exempt
 def tambah_artikel(request):
         if request.method == "POST":
             judul = request.POST.get("judul")
-            author= request.user
+
             konten = request.POST.get("konten")
-            artikel = Artikel(judul=judul,author=author, konten=konten)
+            artikel = Artikel(judul=judul, konten=konten)
             artikel.save()
         return JsonResponse({"pk":artikel.pk, "fields":
             {
