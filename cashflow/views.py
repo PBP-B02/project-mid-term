@@ -34,11 +34,13 @@ def show_json_spending_by_id(request,id):
     data = Spending.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json",data), content_type="application/json")
 
+@csrf_exempt
 def delete_income(request,id):
     if request.method == 'DELETE':
         Income.objects.filter(pk=id).delete()
         return HttpResponse(status=202)
 
+@csrf_exempt
 def delete_spending(request,id):
     if request.method == 'DELETE':
         Spending.objects.filter(pk=id).delete()
@@ -48,6 +50,7 @@ def show_json_spending(request):
     data = Spending.objects.all()
     return HttpResponse(serializers.serialize("json",data), content_type="application/json")
 
+@csrf_exempt
 def add_income(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -68,7 +71,7 @@ def add_income(request):
         }
         return JsonResponse(new_income);
 
-
+@csrf_exempt
 def add_spending(request):
     if request.method == 'POST':
         name = request.POST.get('name')
