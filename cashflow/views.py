@@ -13,54 +13,41 @@ from cashflow.models import *
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
-@login_required(login_url='/login')
 def show_cashflow(request):
     return render(request, "cashflow.html")
 
-@login_required(login_url='/login')
 def show_my_income(request):
     return render(request, "my-income.html")
 
-@login_required(login_url='/login')
 def show_my_spending(request):
     return render(request, "my-spending.html")
 
-@login_required(login_url='/login')
 def show_json_income(request):
-    data = Income.objects.filter(user=request.user)
+    data = Income.objects.all()
     return HttpResponse(serializers.serialize("json",data), content_type="application/json")
 
-@login_required(login_url='/login')
 def show_json_income_by_id(request,id):
     data = Income.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json",data), content_type="application/json")
 
-@login_required(login_url='/login')
 def show_json_spending_by_id(request,id):
     data = Spending.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json",data), content_type="application/json")
 
-@login_required(login_url='/login')
-@csrf_exempt
 def delete_income(request,id):
     if request.method == 'DELETE':
         Income.objects.filter(pk=id).delete()
         return HttpResponse(status=202)
 
-@login_required(login_url='/login')
-@csrf_exempt
 def delete_spending(request,id):
     if request.method == 'DELETE':
         Spending.objects.filter(pk=id).delete()
         return HttpResponse(status=202)
 
-@login_required(login_url='/login')
 def show_json_spending(request):
-    data = Spending.objects.filter(user=request.user)
+    data = Spending.objects.all()
     return HttpResponse(serializers.serialize("json",data), content_type="application/json")
 
-@login_required(login_url='/login')
-@csrf_exempt
 def add_income(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -69,7 +56,7 @@ def add_income(request):
         income_type = request.POST.get('income_type')
         if name == "" or amount == "" or date == "":
             return JsonResponse({'error':True})
-        new_income = Income.objects.create(name = name, amount = amount, date = date, user=request.user, income_type=income_type)
+        new_income = Income.objects.create(name = name, amount = amount, date = date, income_type=income_type)
         new_income = {
             'pk' : new_income.pk,
             'fields':{
@@ -81,8 +68,7 @@ def add_income(request):
         }
         return JsonResponse(new_income);
 
-@login_required(login_url='/login')
-@csrf_exempt
+@
 def add_spending(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -91,7 +77,7 @@ def add_spending(request):
         spending_type = request.POST.get('spending_type')
         if name == "" or amount == "" or date == "":
             return JsonResponse({'error':True})
-        new_spending = Spending.objects.create(name = name, amount = amount, date = date, user=request.user, spending_type=spending_type)
+        new_spending = Spending.objects.create(name = name, amount = amount, date = date, spending_type=spending_type)
         new_spending = {
             'pk' : new_spending.pk,
             'fields':{
