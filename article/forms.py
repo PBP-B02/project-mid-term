@@ -19,10 +19,4 @@ class FormArtikel(forms.ModelForm):
                 'id':"konten", 		
                 'placeholder':"Content",
             }),
-            'author': forms.TextInput(attrs={
-                'required': True,
-                'name':"author",
-                'id':"author",
-                'placeholder':"Author"
-            }),
         }
