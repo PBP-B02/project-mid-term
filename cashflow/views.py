@@ -68,7 +68,7 @@ def add_income(request):
         }
         return JsonResponse(new_income);
 
-@
+
 def add_spending(request):
     if request.method == 'POST':
         name = request.POST.get('name')
