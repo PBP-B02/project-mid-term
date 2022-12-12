@@ -1,4 +1,5 @@
 
+import json
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core import serializers
 from django.shortcuts import render, redirect
@@ -94,7 +95,7 @@ def add_income_mobile(request):
         }
         return JsonResponse(new_income);
     
- @csrf_exempt
+@csrf_exempt
 def add_spending_mobile(request):
     if request.method == 'POST':
         body_unicode = (request.body.decode('utf-8'))
