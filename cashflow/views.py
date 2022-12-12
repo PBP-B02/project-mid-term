@@ -118,6 +118,7 @@ def add_spending_mobile(request):
         }
         return JsonResponse(new_spending);
 
+    
 @csrf_exempt
 def add_spending(request):
     if request.method == 'POST':
