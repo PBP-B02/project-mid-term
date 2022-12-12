@@ -79,7 +79,7 @@ def add_income_mobile(request):
         body = json.loads(body_unicode)
         name = body['name']
         amount = body['amount']
-        date = datetime.strptime(body['date'], '%Y-%m-%d')
+        date = datetime.datetime.strptime(body['date'], '%Y-%m-%d')
         income_type = body['incomeType']
         if name == "" or amount == "" or date == "":
             return JsonResponse({'error':True})
@@ -102,7 +102,7 @@ def add_spending_mobile(request):
         body = json.loads(body_unicode)
         name = body['name']
         amount = body['amount']
-        date = datetime.strptime(body['date'], '%Y-%m-%d')        
+        date = datetime.datetime.strptime(body['date'], '%Y-%m-%d')        
         spending_type = body['spendingType']
         if name == "" or amount == "" or date == "":
             return JsonResponse({'error':True})
