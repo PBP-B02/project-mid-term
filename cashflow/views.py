@@ -70,6 +70,52 @@ def add_income(request):
             }
         }
         return JsonResponse(new_income);
+    
+@csrf_exempt
+def add_income_mobile(request):
+    if request.method == 'POST':
+        body_unicode = (request.body.decode('utf-8'))
+        body = json.loads(body_unicode)
+        name = body['name']
+        amount = body['amount']
+        date = body['date']
+        income_type = body['incomeType']
+        if name == "" or amount == "" or date == "":
+            return JsonResponse({'error':True})
+        new_income = Income.objects.create(name = name, amount = amount, date = date, income_type=income_type)
+        new_income = {
+            'pk' : new_income.pk,
+            'fields':{
+                'name':new_income.name,
+                'amount':new_income.amount,
+                'date':new_income.date,
+                'income_type':new_income.income_type
+            }
+        }
+        return JsonResponse(new_income);
+    
+ @csrf_exempt
+def add_spending_mobile(request):
+    if request.method == 'POST':
+        body_unicode = (request.body.decode('utf-8'))
+        body = json.loads(body_unicode)
+        name = body['name']
+        amount = body['amount']
+        date = body['date']
+        spending_type = body['spendingType']
+        if name == "" or amount == "" or date == "":
+            return JsonResponse({'error':True})
+        new_spending = Spending.objects.create(name = name, amount = amount, date = date, spending_type =spending_type)
+        new_spending = {
+            'pk' : new_spending.pk,
+            'fields':{
+                'name':new_spending.name,
+                'amount':new_spending.amount,
+                'date':new_spending.date,
+                'spending_type':new_spending.spending_type
+            }
+        }
+        return JsonResponse(new_spending);
 
 @csrf_exempt
 def add_spending(request):
